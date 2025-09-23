@@ -1,0 +1,24 @@
+# Terraform Ignores
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+# Crash log files
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+!*.tfvars.enc     # Allow encrypted tfvars files, if you use them
+backend.tf
+
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.tfstate.lock.info
+.terraformrc
+terraform.rc
+.idea/codeStyles
+.idea
+.envrc
+.DS_Store
+

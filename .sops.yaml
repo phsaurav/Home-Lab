@@ -1,0 +1,3 @@
+creation_rules:
+  - path_regex: '(\.tfvars$|(^|/)backend\.tf$)'
+    kms: arn:aws:kms:ap-south-1:648539820216:key/08a99498-99c9-4288-9527-3c5560c50d01
