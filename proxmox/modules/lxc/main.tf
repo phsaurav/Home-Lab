@@ -12,6 +12,7 @@ resource "proxmox_lxc" "lxc_container" {
   # Resources
   cores  = var.cores
   memory = var.memory
+  swap = var.swap
 
   # Root filesystem
   rootfs {
@@ -28,7 +29,6 @@ resource "proxmox_lxc" "lxc_container" {
       keyctl     = try(var.features.keyctl, null)
       mount      = try(var.features.mount, null)
       nesting    = try(var.features.nesting, null)
-      force_rw_sys = try(var.features.force_rw_sys, null)
     }
   }
 
@@ -37,6 +37,7 @@ resource "proxmox_lxc" "lxc_container" {
     name   = var.network_name
     bridge = var.network_bridge
     ip     = var.network_ip
+    gw = var.network_gw
     ip6    = var.network_ip6
   }
 

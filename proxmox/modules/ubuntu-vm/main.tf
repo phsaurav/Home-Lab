@@ -3,6 +3,7 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
   target_node = var.target_node
   vmid        = var.vmid
   pool        = var.pool
+  vm_state    = var.vm_state
 
   # Clone settings
   clone      = var.clone_template
@@ -33,7 +34,7 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
   clone_wait            = 10
   additional_wait       = 5
   agent_timeout = 300
-  skip_ipv6 = true
+  skip_ipv6     = true
 
   # Disk configuration
   disks {

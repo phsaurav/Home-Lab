@@ -10,7 +10,7 @@ output "container_name" {
 
 output "container_ip" {
   description = "The IP address of the LXC container"
-  value       = proxmox_lxc.lxc_container.network[0].ip
+  value       = var.network_ip
 }
 
 output "container_node" {
@@ -26,11 +26,6 @@ output "container_pool" {
 output "container_ostemplate" {
   description = "The OS template used for the container"
   value       = proxmox_lxc.lxc_container.ostemplate
-}
-
-output "container_network_bridge" {
-  description = "The network bridge used by the container"
-  value       = proxmox_lxc.lxc_container.network[0].bridge
 }
 
 output "container_rootfs_size" {

@@ -21,6 +21,12 @@ variable "pool" {
   default     = null
 }
 
+variable "vm_state" {
+  description = "VM state after creation (running, stopped)"
+  type        = string
+  default = "running"
+}
+
 # Clone Configuration
 variable "clone_template" {
   description = "Template to clone from"

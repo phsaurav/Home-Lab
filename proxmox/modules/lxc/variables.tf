@@ -61,7 +61,13 @@ variable "cores" {
 variable "memory" {
   description = "Memory allocation in MB"
   type        = number
-  default     = 2048
+  default     = 1024
+}
+
+variable "swap" {
+  description = "Swap allocation in MB"
+  type        = number
+  default     = 0
 }
 
 # Storage Configuration
@@ -90,15 +96,11 @@ variable "features" {
     keyctl       = optional(bool)
     mount        = optional(string)
     nesting      = optional(bool)
-    force_rw_sys = optional(bool)
   })
-  default = {
-    nesting = true
-  }
+  default = {}
 
   validation {
-    condition = var.features.mount == null || can(regex("^(proc|sys|cgroup)?.*$", var.
-features.mount))
+    condition = var.features.mount == null || can(regex("^(proc|sys|cgroup)?.*$", var.features.mount))
     error_message = "Mount must be a valid mount specification."
   }
 }
@@ -120,6 +122,11 @@ variable "network_ip" {
   description = "IP address with CIDR (e.g., '192.168.1.100/24' or 'dhcp')"
   type        = string
   default     = "dhcp"
+}
+
+variable "network_gw" {
+  description = "Gateway address"
+  type        = string
 }
 
 variable "network_ip6" {
