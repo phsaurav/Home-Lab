@@ -1,0 +1,17 @@
+{
+	"data": "ENC[AES256_GCM,data:VZSf6MkWbo0DrYIT1+dEzWtH3XbRO2hgSEdCcc/9qgRUrnwO3Jq1sFoDLdOpqwQ3MEBDj4EkpsLPyZ+dKMAUq1pJE+QLqqroBajs7ukkm/sRN65oaANJNifroDchJAX3Bze/BF4LCYaRV7r8oPt4pH4=,iv:sZf7eAaRSN8WnXD9GGlpJUM0pMmSbd9PsVHaUVpBwCs=,tag:SChyjBdckpy6YiryIIcyJQ==,type:str]",
+	"sops": {
+		"kms": [
+			{
+				"arn": "arn:aws:kms:ap-south-1:648539820216:key/08a99498-99c9-4288-9527-3c5560c50d01",
+				"created_at": "2025-09-24T06:38:47Z",
+				"enc": "AQICAHh9+zL6sENLSUMixO/MWBA/FaWPiiDkNL1jHhWui3SvyAFMPOrclZSXIVWfFPgQi8c5AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM6YNR681AXCJjininAgEQgDuJvM02VbJ3ChHn4hbm0DZGW2fV3bnxOg5PK77WW/iDsWsQqa8ScaKkusMp7SakRMeKU0DMgwAv3t0myg==",
+				"aws_profile": ""
+			}
+		],
+		"lastmodified": "2025-09-24T06:38:48Z",
+		"mac": "ENC[AES256_GCM,data:i9Q61sboQ6mybws+XEbZ1mvbZgfhc0nl9SrcfclSNaGXSodTRBPh7swI3ghLBhs6wpdTYRFxiLl3Xgx1SFepr3BFFXcV2wHc+aT/c8gxQs1K8Dx5/Rt46Pku/YGwf68XkZScljZ67Nv+jobI+SiaCgNFuZQlFiq8MuzZ9C0Dcr8=,iv:5hllUrXskHnJ1s7J7BU+jyDrHGvFIJ3lsjz8U2BvmuU=,tag:2C9/92rttnOR9gK65ImOVA==,type:str]",
+		"unencrypted_suffix": "_unencrypted",
+		"version": "3.10.2"
+	}
+}
