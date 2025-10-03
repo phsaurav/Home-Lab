@@ -1,3 +1,24 @@
+# Ubuntu K8s Cluster
+module "ubunut-k8s-1" {
+  source = "../../modules/ubuntu-k8s"
+
+  cluster_id    = 2
+  cluster_name  = "ubuntu-k8s"
+  master_count  = 1
+  worker_count  = 2
+
+  network_cidr = var.ub_k8s_network_cidr
+  gateway      = var.gateway
+
+  clone_template = "ubuntu-cid-tp"
+  ci_user        = var.ci_user
+  ci_password    = var.ci_password
+
+
+  master_memory = 4096
+  worker_memory = 4096
+}
+
 module "tk_nas" {
   source = "../../modules/lxc"
 
@@ -21,7 +42,7 @@ module "tk_nas" {
   # Network
   network_bridge = "vmbr0"
   network_ip     = var.tk_nas_ip
-  network_gw = var.lxc_gw
+  network_gw = var.gateway
 
   features_enabled = true
   features = {
@@ -58,15 +79,48 @@ module "pi_hole" {
   # Network
   network_bridge = "vmbr0"
   network_ip     = var.pi_hole_ip
-  network_gw = var.lxc_gw
+  network_gw = var.gateway
 
   features_enabled = true
   features = {
     nesting      = true
-    keyctl       = true
+    # keyctl       = true
   }
 
   startup = "order=5,up=10"
 
   tags = "lxc,dns,prod"
+}
+
+module "n8n" {
+  source = "../../modules/lxc"
+
+  vmid        = 383
+  target_node = "proxmox"
+  hostname    = "n8n"
+  ostemplate  = "local:vztmpl/debian-12-standard_12.12-1_amd64.tar.zst"
+  password    = var.lxc_pass
+  onboot      = false
+  unprivileged = true
+
+  cores  = 2
+  memory = 2048
+  swap   = 0
+
+  # Storage
+  rootfs_storage = "local-lvm"
+  rootfs_size    = "10G"
+
+  # Network
+  network_bridge = "vmbr0"
+  network_ip     = var.n8n_ip
+  network_gw     = var.gateway
+
+  features_enabled = true
+  features = {
+    nesting = true
+  }
+
+  # Tags
+  tags = "lxc,prod"
 }

@@ -13,6 +13,25 @@ variable "environment" {
   # }
 }
 
+#Ubuntu Cluster Variable
+# Cloud-init
+variable "ci_user" {
+  description = "Cloud-init user"
+  type        = string
+}
+
+variable "ci_password" {
+  description = "Cloud-init password"
+  type        = string
+  sensitive   = true
+}
+
+variable "ub_k8s_network_cidr" {
+  description = "ubuntu VM IP configuration (ipconfig0)"
+  type        = string
+}
+
+
 # ProxMox Variable
 variable "pm_api_url" {
   description = "Proxmox API URL"
@@ -36,7 +55,7 @@ variable "lxc_pass" {
   sensitive   = true
 }
 
-variable "lxc_gw" {
+variable "gateway" {
   description = "LXC Container Gateway"
   type        = string
 }
@@ -50,6 +69,13 @@ variable "tk_nas_ip" {
 # Pi-Hole variables
 variable "pi_hole_ip" {
   description = "PI Hole Container IP"
+  type        = string
+  default     = "dhcp"
+}
+
+# n8n variables
+variable "n8n_ip" {
+  description = "n8n Container IP"
   type        = string
   default     = "dhcp"
 }
