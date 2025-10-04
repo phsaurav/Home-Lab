@@ -29,3 +29,8 @@ terraform.rc
 _out/**
 !_out/
 !_out/**/*.enc
+
+# Ansible
+ansible/secret.yaml.decrypted
+ansible/secret.yaml.bak
+ansible/secret.yaml.tmp
