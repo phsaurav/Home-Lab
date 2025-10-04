@@ -55,13 +55,12 @@ variable "target_node" {
 variable "pool" {
   description = "Proxmox resource pool."
   type        = string
-  default     = null
 }
 
 variable "vm_state" {
   description = "Desired state of each VM after creation."
   type        = string
-  default     = "running"
+  default     = "stopped"
 }
 
 variable "clone_template" {
@@ -138,7 +137,7 @@ variable "network_firewall" {
 variable "onboot" {
   description = "Start VMs automatically when Proxmox boots."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "cicustom" {

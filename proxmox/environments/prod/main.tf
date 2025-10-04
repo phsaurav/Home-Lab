@@ -1,13 +1,34 @@
+# Talos K8s Cluster
+module "talos-k8s-1" {
+  source = "../../modules/talos-k8s"
+
+  cluster_id   = 1
+  cluster_name = "talos-k8s"
+  pool = "Talos-K8s"
+
+  master_count = 1
+  worker_count = 2
+
+  network_cidr = var.talos_k8s_cidr
+  gateway      = var.gateway
+
+  clone_template = "talos-tp"
+  full_clone     = true
+
+}
+
 # Ubuntu K8s Cluster
 module "ubunut-k8s-1" {
   source = "../../modules/ubuntu-k8s"
 
   cluster_id    = 2
   cluster_name  = "ubuntu-k8s"
+  pool = "Ubuntu-K8s"
+
   master_count  = 1
   worker_count  = 2
 
-  network_cidr = var.ub_k8s_network_cidr
+  network_cidr = var.ub_k8s_cidr
   gateway      = var.gateway
 
   clone_template = "ubuntu-cid-tp"
@@ -19,6 +40,7 @@ module "ubunut-k8s-1" {
   worker_memory = 4096
 }
 
+# Lightweight LXC Containers
 module "tk_nas" {
   source = "../../modules/lxc"
 

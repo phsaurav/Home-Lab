@@ -13,7 +13,13 @@ variable "environment" {
   # }
 }
 
-#Ubuntu Cluster Variable
+# Talos Cluster Variables
+variable "talos_k8s_cidr" {
+  description = "Talos VM IP configuration "
+  type        = string
+}
+
+# Ubuntu Cluster Variables
 # Cloud-init
 variable "ci_user" {
   description = "Cloud-init user"
@@ -26,7 +32,7 @@ variable "ci_password" {
   sensitive   = true
 }
 
-variable "ub_k8s_network_cidr" {
+variable "ub_k8s_cidr" {
   description = "ubuntu VM IP configuration (ipconfig0)"
   type        = string
 }
