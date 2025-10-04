@@ -1,0 +1,5 @@
+---
+- hosts: k8s_workers
+  gather_facts: false
+  roles:
+    - node_join

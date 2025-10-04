@@ -1,0 +1,84 @@
+## Directory layout
+
+```txt
+.ansible/
+├── ansible.cfg
+├── inventories/
+│   └── dev/
+│       ├── hosts.yml
+│       └── group_vars/
+│           ├── all.yml
+│           ├── k8s_control_plane.yml
+│           └── k8s_workers.yml
+├── playbooks/
+│   ├── site.yml
+│   ├── cluster_init.yml        # Applied to control-plane only
+│   ├── join_workers.yml        # Applied to workers only
+│   └── support_tools.yml       # Optional extras
+└── roles/
+    ├── base_setup/
+    │   └── tasks/main.yml
+    ├── containerd/
+    │   ├── handlers/main.yml
+    │   └── tasks/main.yml
+    ├── kube_packages/
+    │   ├── handlers/main.yml
+    │   └── tasks/main.yml
+    ├── control_plane/
+    │   ├── tasks/main.yml
+    │   └── templates/kubeadm-config.yaml.j2
+    ├── node_join/
+    │   └── tasks/main.yml
+    └── support_tools/
+        └── tasks/main.yml
+```
+
+
+## Requirements
+
+- Ansible ≥ 2.10 (collections not strictly required; add as needed).
+- SSH access to each Ubuntu host via the user defined in `ansible.cfg`.
+- `sudo` privileges on all nodes.
+
+## Secrets management
+
+All sensitive information lives in ansible/secret.yaml, encrypted with Ansible Vault.
+
+1. Create or edit the secrets file
+```bash
+cd ansible
+ansible-vault create secret.yaml   # or `ansible-vault edit secret.yaml`
+```
+
+3. Vault password
+ • Prompt each run with `--ask-vault-pass`
+
+4. Editing later
+```bash
+ansible-vault edit secret.yaml
+ansible-vault view secret.yaml
+```
+
+## Usage
+
+From the `.ansible` directory:
+
+1. **Bootstrap everything (common prep, control plane, and worker join):**
+```bash
+ansible-playbook playbooks/site.yml -e @secret.yaml --ask-vault-pass
+```
+2. **Re-run control-plane initialization only (after a reset or rebuild):**
+```bash
+ansible-playbook playbooks/cluster_init.yml -e @secret.yaml --ask-vault-pass
+```
+3. **Join workers (e.g., after adding new nodes):**
+```bash
+ansible-playbook playbooks/join_workers.yml -e @secret.yaml --ask-vault-pass
+ ```
+4. Optional helper tooling (kubectl aliases, etc.):
+Set `support_tools_enabled: true` in group_vars/all.yml.
+Run:
+```bash
+ ansible-playbook playbooks/support_tools.yml -e @secret.yaml --ask-vault-pass
+```
+
