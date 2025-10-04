@@ -1,0 +1,53 @@
+---
+- name: Check if control plane already initialized
+  ansible.builtin.stat:
+    path: /etc/kubernetes/admin.conf
+  register: kubeadm_admin_conf
+
+- name: Drop kubeadm configuration file
+  ansible.builtin.template:
+    src: kubeadm-config.yaml.j2
+    dest: /etc/kubernetes/kubeadm-config.yaml
+    mode: '0644'
+
+- name: Initialize control plane when required
+  ansible.builtin.command: >
+    kubeadm init
+    --config /etc/kubernetes/kubeadm-config.yaml
+    --upload-certs
+  when: not kubeadm_admin_conf.stat.exists
+
+- name: Create kube config directory for cluster admin user
+  ansible.builtin.file:
+    path: "/home/{{ cluster_admin_user }}/.kube"
+    state: directory
+    owner: "{{ cluster_admin_user }}"
+    group: "{{ cluster_admin_user }}"
+    mode: '0750'
+
+- name: Copy admin.conf for kubectl usage
+  ansible.builtin.copy:
+    src: /etc/kubernetes/admin.conf
+    dest: "/home/{{ cluster_admin_user }}/.kube/config"
+    owner: "{{ cluster_admin_user }}"
+    group: "{{ cluster_admin_user }}"
+    mode: '0600'
+    remote_src: true
+
+- name: Install Flannel CNI (idempotent)
+  ansible.builtin.command: >
+    kubectl apply -f {{ flannel_manifest_url }}
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+  register: flannel_apply
+  changed_when: "'created' in flannel_apply.stdout or 'configured' in flannel_apply.stdout"
+  failed_when: flannel_apply.rc not in [0, 1]
+
+- name: Generate fresh worker join command
+  ansible.builtin.command: kubeadm token create --print-join-command
+  register: join_cmd
+  changed_when: "{{ false }}"
+
+- name: Share join command with inventory
+  ansible.builtin.set_fact:
+    kubeadm_worker_join: "{{ join_cmd.stdout }}"

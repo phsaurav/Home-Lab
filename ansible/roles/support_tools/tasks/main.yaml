@@ -1,0 +1,30 @@
+---
+- name: Ensure kubectl is available
+  ansible.builtin.command: kubectl version --client --short
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+  register: kubectl_check
+  changed_when: false
+  failed_when: kubectl_check.rc != 0
+
+- name: Set useful aliases for root
+  ansible.builtin.blockinfile:
+    path: /root/.bashrc
+    create: true
+    marker: "# {mark} ANSIBLE-K8S ALIASES"
+    block: |
+      alias k='kubectl'
+      alias kgp='kubectl get pods -A'
+      alias kgs='kubectl get svc -A'
+
+- name: Mirror aliases for primary user
+  ansible.builtin.blockinfile:
+    path: "/home/{{ cluster_admin_user }}/.bashrc"
+    create: true
+    owner: "{{ cluster_admin_user }}"
+    group: "{{ cluster_admin_user }}"
+    marker: "# {mark} ANSIBLE-K8S ALIASES"
+    block: |
+      alias k='kubectl'
+      alias kgp='kubectl get pods -A'
+      alias kgs='kubectl get svc -A'
