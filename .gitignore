@@ -22,3 +22,6 @@ terraform.rc
 .envrc
 .DS_Store
 
+# Talos
+*.patch
+!*.patch.tmpl

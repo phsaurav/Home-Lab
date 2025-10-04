@@ -1,0 +1,10 @@
+machine:
+  network:
+    hostname: talos-k8s-cp
+    interfaces:
+      - interface: ens18 
+        addresses:
+          - ${TALOS_CP1_IP}/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: ${GATEWAY}
