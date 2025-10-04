@@ -19,24 +19,6 @@ variable "talos_k8s_cidr" {
   type        = string
 }
 
-# Ubuntu Cluster Variables
-# Cloud-init
-variable "ci_user" {
-  description = "Cloud-init user"
-  type        = string
-}
-
-variable "ci_password" {
-  description = "Cloud-init password"
-  type        = string
-  sensitive   = true
-}
-
-variable "ub_k8s_cidr" {
-  description = "ubuntu VM IP configuration (ipconfig0)"
-  type        = string
-}
-
 
 # ProxMox Variable
 variable "pm_api_url" {

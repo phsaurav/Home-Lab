@@ -17,28 +17,7 @@ module "talos-k8s-1" {
 
 }
 
-# Ubuntu K8s Cluster
-module "ubunut-k8s-1" {
-  source = "../../modules/ubuntu-k8s"
 
-  cluster_id    = 2
-  cluster_name  = "ubuntu-k8s"
-  pool = "Ubuntu-K8s"
-
-  master_count  = 1
-  worker_count  = 2
-
-  network_cidr = var.ub_k8s_cidr
-  gateway      = var.gateway
-
-  clone_template = "ubuntu-cid-tp"
-  ci_user        = var.ci_user
-  ci_password    = var.ci_password
-
-
-  master_memory = 4096
-  worker_memory = 4096
-}
 
 # Lightweight LXC Containers
 module "tk_nas" {
