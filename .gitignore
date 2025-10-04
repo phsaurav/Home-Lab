@@ -25,3 +25,7 @@ terraform.rc
 # Talos
 *.patch
 !*.patch.tmpl
+/talos/secrets.yaml
+_out/**
+!_out/
+!_out/**/*.enc
