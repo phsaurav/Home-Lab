@@ -90,6 +90,7 @@ module "ubuntu_vm_2" {
 ################################################################################
 # Ubuntu K8s Cluster
 ################################################################################
+
 module "ubunut-k8s-1" {
   source = "../../modules/ubuntu-k8s"
 
@@ -103,7 +104,7 @@ module "ubunut-k8s-1" {
   network_cidr = var.ub_k8s_cidr
   gateway      = var.gateway
 
-  clone_template = "ubuntu-cid-tp"
+  clone_template = "ubuntu-k8-base"
   ci_user        = var.ci_user
   ci_password    = var.ci_password
 
