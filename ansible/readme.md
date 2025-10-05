@@ -25,6 +25,7 @@
     └── support_tools/
 ```
 
+This Ansible implementation automates Kubernetes setup of Ubuntu Cluster in Development Environment.
 
 ## Requirements
 
@@ -33,6 +34,22 @@
 - `sudo` privileges on all nodes.
 
 ## Secrets management
+
+Structure:
+```txt
+host_ips:
+  master-01: 
+  worker-01: 
+  worker-02: 
+
+proxmox_vm_ids:
+  master-01: 
+  worker-01: 
+  worker-02: 
+
+user_name: 
+control_plane_endpoint: 
+```
 
 All sensitive information lives in ansible/secret.yaml, encrypted with Ansible Vault.
 
@@ -57,20 +74,20 @@ From the `.ansible` directory:
 
 1. **Bootstrap everything (common prep, control plane, and worker join):**
 ```bash
-ansible-playbook playbooks/site.yml -e @secret.yaml --ask-vault-pass
+ansible-playbook playbooks/site.yaml -e @secret.yaml --ask-vault-pass
 ```
 2. **Re-run control-plane initialization only (after a reset or rebuild):**
 ```bash
-ansible-playbook playbooks/cluster_init.yml -e @secret.yaml --ask-vault-pass
+ansible-playbook playbooks/cluster_init.yaml -e @secret.yaml --ask-vault-pass
 ```
 3. **Join workers (e.g., after adding new nodes):**
 ```bash
-ansible-playbook playbooks/join_workers.yml -e @secret.yaml --ask-vault-pass
+ansible-playbook playbooks/join_workers.yaml -e @secret.yaml --ask-vault-pass
  ```
 4. Optional helper tooling (kubectl aliases, etc.):
 Set `support_tools_enabled: true` in group_vars/all.yml.
 Run:
 ```bash
- ansible-playbook playbooks/support_tools.yml -e @secret.yaml --ask-vault-pass
+ansible-playbook playbooks/support_tools.yaml -e @secret.yaml --ask-vault-pass
 ```
 

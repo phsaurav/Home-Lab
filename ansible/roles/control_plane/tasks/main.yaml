@@ -4,6 +4,14 @@
     path: /etc/kubernetes/admin.conf
   register: kubeadm_admin_conf
 
+- name: Ensure /etc/kubernetes exists
+  ansible.builtin.file:
+    path: /etc/kubernetes
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
 - name: Drop kubeadm configuration file
   ansible.builtin.template:
     src: kubeadm-config.yaml.j2
@@ -40,13 +48,13 @@
   environment:
     KUBECONFIG: /etc/kubernetes/admin.conf
   register: flannel_apply
-  changed_when: "'created' in flannel_apply.stdout or 'configured' in flannel_apply.stdout"
+  changed_when: "'created' in flannel_apply.stdout or 'configured' in flannel_apply. stdout"
   failed_when: flannel_apply.rc not in [0, 1]
 
 - name: Generate fresh worker join command
   ansible.builtin.command: kubeadm token create --print-join-command
   register: join_cmd
-  changed_when: "{{ false }}"
+  changed_when: false
 
 - name: Share join command with inventory
   ansible.builtin.set_fact:

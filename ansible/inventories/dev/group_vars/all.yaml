@@ -8,7 +8,7 @@ pod_network_cidr: 10.244.0.0/16
 service_cidr: 10.96.0.0/12
 kube_apiserver_port: 6443
 flannel_manifest_url: https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
-cluster_admin_user: ubuntu
+cluster_admin_user: "{{ user_name }}"
 
 # Package versions (use wildcards to stay on latest patch within a minor)
 kubernetes_repo_channel: https://pkgs.k8s.io/core:/stable:/v1.33/deb/
@@ -30,5 +30,6 @@ sysctl_settings:
 kernel_modules:
   - overlay
   - br_netfilter
+  - vxlan
 
 support_tools_enabled: false

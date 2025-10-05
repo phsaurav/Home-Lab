@@ -5,32 +5,55 @@
     state: directory
     mode: '0755'
 
-- name: Install Kubernetes repository key
+- name: Check for existing Kubernetes repo key
+  ansible.builtin.stat:
+    path: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+  register: kubernetes_repo_keyring
+
+- name: Download Kubernetes repository key
   ansible.builtin.get_url:
     url: "{{ kubernetes_repo_key_url }}"
-    dest: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    dest: /etc/apt/keyrings/kubernetes-apt-keyring.asc
     mode: '0644'
+  register: kubernetes_repo_key
+
+- name: Convert Kubernetes repository key to GPG
+  ansible.builtin.command:
+    argv:
+      - gpg
+      - --batch
+      - --yes
+      - --dearmor
+      - --output
+      - /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+      - /etc/apt/keyrings/kubernetes-apt-keyring.asc
+  when: kubernetes_repo_key.changed or not kubernetes_repo_keyring.stat.exists
+  changed_when: kubernetes_repo_key.changed or not kubernetes_repo_keyring.stat.exists
 
 - name: Add Kubernetes apt repository
   ansible.builtin.apt_repository:
     repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] {{ kubernetes_repo_channel }} /"
     filename: kubernetes
     state: present
+    update_cache: yes
 
 - name: Install Kubernetes core packages
   ansible.builtin.apt:
     name:
       - "kubelet={{ kubernetes_package_version }}"
       - "kubeadm={{ kubernetes_package_version }}"
-      - "{{ (install_kubectl | bool) | ternary('kubectl=' ~ kubernetes_package_version, omit) }}"
+      - "{{ (install_kubectl | default(true) | bool) | ternary('kubectl=' ~ kubernetes_package_version, omit) }}"
     allow_downgrade: true
     state: present
     update_cache: yes
   notify: enable kubelet
 
 - name: Hold kube packages at current minor
-  ansible.builtin.shell: |
-    apt-mark hold kubelet kubeadm kubectl || true
-  args:
-    warn: false
-  changed_when: false
+  ansible.builtin.dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  loop:
+    - kubelet
+    - kubeadm
+    - kubectl
+  when: item != 'kubectl' or install_kubectl | default(true) | bool
