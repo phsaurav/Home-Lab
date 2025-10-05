@@ -109,6 +109,6 @@ module "ubunut-k8s-1" {
   ci_password    = var.ci_password
 
 
-  master_memory = 4096
+  master_memory = 8192
   worker_memory = 4096
 }

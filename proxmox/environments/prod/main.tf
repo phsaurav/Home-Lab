@@ -15,6 +15,9 @@ module "talos-k8s-1" {
   clone_template = "talos-tp"
   full_clone     = true
 
+  master_memory = 8192
+  worker_memory = 4096
+
 }
 
 
