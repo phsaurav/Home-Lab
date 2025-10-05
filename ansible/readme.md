@@ -2,35 +2,27 @@
 
 ```txt
 .ansible/
-├── ansible.cfg
-├── inventories/
-│   └── dev/
-│       ├── hosts.yml
-│       └── group_vars/
+├── ansible.cfg                         # Ansible common config
+├── secrets.yaml                        # Ansible Vault Secret
+├── inventories/                        # All inventory directory
+│   └── dev/                            # Dev Environement
+│       ├── hosts.yml                   # Holds all Dev Hosts Data
+│       └── group_vars/                 # Group Variables
 │           ├── all.yml
 │           ├── k8s_control_plane.yml
 │           └── k8s_workers.yml
 ├── playbooks/
-│   ├── site.yml
+│   ├── site.yml                # Initial Setup for all hosts
 │   ├── cluster_init.yml        # Applied to control-plane only
 │   ├── join_workers.yml        # Applied to workers only
 │   └── support_tools.yml       # Optional extras
 └── roles/
     ├── base_setup/
-    │   └── tasks/main.yml
     ├── containerd/
-    │   ├── handlers/main.yml
-    │   └── tasks/main.yml
     ├── kube_packages/
-    │   ├── handlers/main.yml
-    │   └── tasks/main.yml
     ├── control_plane/
-    │   ├── tasks/main.yml
-    │   └── templates/kubeadm-config.yaml.j2
     ├── node_join/
-    │   └── tasks/main.yml
     └── support_tools/
-        └── tasks/main.yml
 ```
 
 
