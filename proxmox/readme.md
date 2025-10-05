@@ -1,6 +1,6 @@
 # Proxmox Terraform Setup
 
-![img.png](img.png)
+![img.png](../img.png)
 
 The infrastructure is devided into development and production environment. The repository follows a standard Terraform module layout:
 
