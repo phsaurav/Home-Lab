@@ -1,0 +1,6 @@
+---
+- name: restart containerd
+  ansible.builtin.service:
+    name: containerd
+    state: restarted
+    enabled: true

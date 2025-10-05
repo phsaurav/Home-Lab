@@ -1,0 +1,20 @@
+---
+- name: Prepare OS and install base Kubernetes requirements
+  hosts: k8s_cluster
+  gather_facts: true
+  roles:
+    - base_setup
+    - containerd
+    - kube_packages
+
+- name: Bootstrap control plane
+  hosts: k8s_control_plane
+  gather_facts: false
+  roles:
+    - control_plane
+
+- name: Join worker nodes
+  hosts: k8s_workers
+  gather_facts: false
+  roles:
+    - node_join

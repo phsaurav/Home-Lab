@@ -22,3 +22,15 @@ terraform.rc
 .envrc
 .DS_Store
 
+# Talos
+*.patch
+!*.patch.tmpl
+/talos/secrets.yaml
+_out/**
+!_out/
+!_out/**/*.enc
+
+# Ansible
+ansible/secret.yaml.decrypted
+ansible/secret.yaml.bak
+ansible/secret.yaml.tmp

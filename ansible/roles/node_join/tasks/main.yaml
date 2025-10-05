@@ -1,0 +1,31 @@
+---
+- name: Retrieve join command from control plane host
+  ansible.builtin.set_fact:
+    kubeadm_join_cmd: "{{ hostvars[groups['k8s_control_plane'][0]].kubeadm_worker_join }}"
+  when: hostvars[groups['k8s_control_plane'][0]].get('kubeadm_worker_join') is defined
+
+- name: Fail clearly if join command absent
+  ansible.builtin.fail:
+    msg: "Join command not available. Run the control_plane role first."
+  when: kubeadm_join_cmd is not defined
+
+- name: Wait for API server to be reachable
+  ansible.builtin.wait_for:
+    host: "{{ control_plane_endpoint | default(hostvars[groups['k8s_control_plane'][0]].ansible_host) }}"
+    port: "{{ kube_apiserver_port }}"
+    timeout: 120
+
+- name: Check if node already joined
+  ansible.builtin.stat:
+    path: /etc/kubernetes/kubelet.conf
+  register: kubelet_conf
+
+- name: Join node to cluster
+  ansible.builtin.command: "{{ kubeadm_join_cmd }} --node-name {{ inventory_hostname }}"
+  when: not kubelet_conf.stat.exists
+
+- name: Ensure kubelet is running
+  ansible.builtin.service:
+    name: kubelet
+    state: started
+    enabled: true

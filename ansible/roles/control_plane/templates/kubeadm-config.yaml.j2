@@ -1,0 +1,20 @@
+kind: ClusterConfiguration
+apiVersion: kubeadm.k8s.io/v1beta3
+kubernetesVersion: "{{ kubernetes_version_tag }}"
+controlPlaneEndpoint: "{{ control_plane_endpoint }}:{{ kube_apiserver_port }}"
+networking:
+  podSubnet: "{{ pod_network_cidr }}"
+  serviceSubnet: "{{ service_cidr }}"
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: systemd
+runtimeRequestTimeout: 15m
+systemReserved:
+  cpu: 100m
+  memory: 350Mi
+kubeReserved:
+  cpu: 100m
+  memory: 50Mi
+enforceNodeAllocatable:
+  - pods

@@ -1,0 +1,54 @@
+---
+- name: Run dist-upgrade when enabled
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: dist
+  register: upgrade_result
+  when: upgrade_nodes | bool
+
+- name: Reboot if upgrade requires it
+  ansible.builtin.reboot:
+    reboot_timeout: 900
+  when:
+    - upgrade_nodes | bool
+    - reboot_after_upgrade | bool
+    - upgrade_result is changed
+
+- name: Install baseline packages
+  ansible.builtin.apt:
+    name: "{{ common_packages }}"
+    state: present
+    update_cache: yes
+
+- name: Disable swap at runtime
+  ansible.builtin.command: swapoff -a
+  when: ansible_swaptotal_mb | int > 0
+  changed_when: false
+
+- name: Ensure swap is commented in fstab
+  ansible.builtin.replace:
+    path: /etc/fstab
+    regexp: '^(\S+\s+\S+\s+swap\s+\S+\s+\S+\s+\S+)'
+    replace: '# \1'
+
+- name: Persist kernel modules for Kubernetes
+  ansible.builtin.copy:
+    dest: /etc/modules-load.d/k8s.conf
+    content: |
+      {% for module in kernel_modules %}
+      {{ module }}
+      {% endfor %}
+
+- name: Load required kernel modules
+  ansible.builtin.modprobe:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ kernel_modules }}"
+
+- name: Set sysctl parameters for Kubernetes networking
+  ansible.builtin.sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: true
+  loop: "{{ sysctl_settings }}"

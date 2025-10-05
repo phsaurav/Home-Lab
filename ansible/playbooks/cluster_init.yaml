@@ -1,0 +1,5 @@
+---
+- hosts: k8s_control_plane
+  gather_facts: false
+  roles:
+    - control_plane

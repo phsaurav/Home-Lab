@@ -1,0 +1,20 @@
+all:
+  vars:
+    ansible_user: "{{ user_name }}"
+    ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+  children:
+    k8s_cluster:
+      children:
+        k8s_control_plane:
+          hosts:
+            master-01:
+              ansible_host: "{{ host_ips['master-01'] }}"
+              proxmox_vm_id: "{{ proxmox_vm_ids['master-01'] }}"
+        k8s_workers:
+          hosts:
+            worker-01:
+              ansible_host: "{{ host_ips['worker-01'] }}"
+              proxmox_vm_id: "{{ proxmox_vm_ids['worker-01'] }}"
+            worker-02:
+              ansible_host: "{{ host_ips['worker-02'] }}"
+              proxmox_vm_id: "{{ proxmox_vm_ids['worker-02'] }}"

@@ -74,3 +74,14 @@ variable "ub_2_vm_ip" {
   description = "ubuntu-2 VM IP address (for provisioners)"
   type        = string
 }
+
+# Ubuntu-K8s Variables
+variable "gateway" {
+  description = "LXC Container Gateway"
+  type        = string
+}
+
+variable "ub_k8s_cidr" {
+  description = "ubuntu VM IP configuration (ipconfig0)"
+  type        = string
+}
