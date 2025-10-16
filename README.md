@@ -49,23 +49,25 @@ HomeLab/
 │   ├── patches                        # Patches for Controlplane and Workers
 │   ├── secrets.yaml                   # Ansible Vault Secret
 │   └── readme.md
-└── ansible/                                #Ansible automation
+└── ansible/                                # Ansible automation
     ├── ansible.cfg                         # Ansible common config
     ├── secrets.yaml                        # Ansible Vault Secret
     ├── readme.md                           # Ansible Documentation
     ├── inventories/                        # All inventory directory
     │   └── dev/                            # Dev Environement
-    │       ├── hosts.yml                   # Holds all Dev Hosts Data
+    │       ├── hosts.yaml                   # Holds all Dev Hosts Data
     │       └── group_vars/                 # Group Variables
-    │           ├── all.yml
-    │           ├── k8s_control_plane.yml
-    │           └── k8s_workers.yml
+    │           ├── all.yaml
+    │           ├── k8s_control_plane.yaml
+    │           └── k8s_workers.yaml
     ├── playbooks/
-    │   ├── site.yml                # Initial Setup for all hosts
-    │   ├── cluster_init.yml        # Applied to control-plane only
-    │   ├── join_workers.yml        # Applied to workers only
-    │   └── support_tools.yml       # Optional extras
+    │   ├── argocd-dev.yaml          # ArgoCD Setup to Dev Server
+    │   ├── site.yaml                # Initial Setup for all hosts
+    │   ├── cluster_init.yaml        # Applied to control-plane only
+    │   ├── join_workers.yaml        # Applied to workers only
+    │   └── support_tools.yaml       # Optional extras
     └── roles/
+        ├── argocd/
         ├── base_setup/
         ├── containerd/
         ├── kube_packages/
