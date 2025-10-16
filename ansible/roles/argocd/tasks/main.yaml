@@ -1,0 +1,53 @@
+---
+- name: Ensure ArgoCD namespace exists
+  kubernetes.core.k8s:
+    state: present
+    kind: Namespace
+    name: "{{ argocd_namespace }}"
+    kubeconfig: "{{ argocd_context_kubeconfig }}"
+
+- name: Add Argo Helm repository
+  kubernetes.core.helm_repository:
+    name: argo
+    repo_url: "{{ argocd_helm_repo }}"
+
+- name: Deploy ArgoCD via Helm
+  when: argocd_install_method == 'helm'
+  community.kubernetes.helm:
+    state: present
+    release_name: argocd
+    chart_ref: argo/{{ argocd_helm_chart }}
+    namespace: "{{ argocd_namespace }}"
+    kubeconfig: "{{ argocd_context_kubeconfig }}"
+    create_namespace: false
+    chart_version: "{{ argocd_version }}"
+    values: "{{ argocd_helm_values | default({}) }}"
+
+- name: Ensure ArgoCD server service is exposed via NodePort
+  when: argocd_nodeport_enabled
+  kubernetes.core.k8s:
+    state: present
+    kubeconfig: "{{ argocd_context_kubeconfig }}"
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: argocd-server
+        namespace: "{{ argocd_namespace }}"
+        labels:
+          app.kubernetes.io/name: argocd-server
+          app.kubernetes.io/component: server
+      spec:
+        type: NodePort
+        selector:
+          app.kubernetes.io/name: argocd-server
+          app.kubernetes.io/component: server
+        ports:
+          - port: 80
+            targetPort: 8080
+            nodePort: "{{ argocd_nodeport_http_port }}"
+            name: http
+          - port: 443
+            targetPort: 8080
+            nodePort: "{{ argocd_nodeport_https_port }}"
+            name: https

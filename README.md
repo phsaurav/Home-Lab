@@ -1,9 +1,16 @@
 # PH's HomeLab
+My Over-Engineered playground, architected with a bare-metal Proxmox infrastructure
+provisioned using Terraform (IaC) , hosting segregated Dev/Prod environments with separate
+Kubernetes clusters for deployment of projects and continuous experimentation with Cloud, DevOps,
+Networking, and Automation.
+
+Established a complete GitOps pipeline with Ansible and ArgoCD for zero-touch infrastructure
+configuration and application deployment, enforcing a security-first posture by managing all credentials
+through HashiCorp Vault and SOPS encryption.
 
 ![img.png](img.png)
 
-## [ProxMox Setup](docs/proxmox.md)
-ProxMox is the backbone of the homelab we are using ProxMox for our virtualization setup.
+## [Overview](docs/proxmox.md)
 ```md
 HomeLab/
 ├── .envrc                           # Dir Env Variables

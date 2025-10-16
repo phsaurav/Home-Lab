@@ -1,0 +1,45 @@
+---
+- name: Deploy ArgoCD to dev cluster
+  hosts: k8s_control_plane
+  gather_facts: false
+  vars:
+    argocd_nodeport_enabled: true
+    argocd_nodeport_http_port: 32080
+    argocd_nodeport_https_port: 32443
+
+  pre_tasks:
+    - name: Install Python Kubernetes library on control plane
+      ansible.builtin.apt:
+        name:
+          - python3-kubernetes
+          - python3-yaml
+        state: present
+        update_cache: true
+      become: true
+
+    - name: Check if Helm is installed
+      ansible.builtin.command: helm version
+      register: helm_check
+      changed_when: false
+      failed_when: false
+
+    - name: Install Helm
+      when: helm_check.rc != 0
+      block:
+        - name: Download Helm install script
+          ansible.builtin.get_url:
+            url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+            dest: /tmp/get-helm-3.sh
+            mode: '0700'
+
+        - name: Run Helm install script
+          ansible.builtin.command: /tmp/get-helm-3.sh
+          become: true
+
+        - name: Remove Helm install script
+          ansible.builtin.file:
+            path: /tmp/get-helm-3.sh
+            state: absent
+
+  roles:
+    - role: argocd

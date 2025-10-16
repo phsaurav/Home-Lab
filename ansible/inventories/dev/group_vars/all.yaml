@@ -1,7 +1,4 @@
 # Common tuning knobs
-host_ips: {}
-proxmox_vm_ids: {}
-control_plane_endpoint: ""
 upgrade_nodes: true
 reboot_after_upgrade: true
 pod_network_cidr: 10.244.0.0/16

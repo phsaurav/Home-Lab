@@ -1,0 +1,12 @@
+---
+# Default values for ArgoCD installation
+argocd_namespace: argocd
+argocd_version: v8.6.3
+argocd_install_method: helm
+argocd_helm_repo: https://argoproj.github.io/argo-helm
+argocd_helm_chart: argo-cd
+argocd_helm_values: {}
+argocd_nodeport_enabled: false
+argocd_nodeport_http_port: 32080
+argocd_nodeport_https_port: 32443
+argocd_context_kubeconfig: /etc/kubernetes/admin.conf
