@@ -67,3 +67,10 @@ variable "n8n_ip" {
   type        = string
   default     = "dhcp"
 }
+
+# Hashicorp Vault variables
+variable "vault_ip" {
+  description = "Hashicorp Vault Container IP"
+  type        = string
+  default     = "dhcp"
+}

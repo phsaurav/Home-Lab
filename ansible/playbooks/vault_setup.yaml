@@ -1,0 +1,77 @@
+---
+- name: Install and Configure HashiCorp Vault
+  hosts: vault  # Add vault to your inventory
+  become: yes
+
+  tasks:
+    - name: Install prerequisites
+      apt:
+        name:
+          - wget
+          - gpg
+          - coreutils
+        state: present
+        update_cache: yes
+
+    - name: Add HashiCorp GPG key
+      shell: |
+        wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+      args:
+        creates: /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
+    - name: Add HashiCorp repository
+      apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+        state: present
+
+    - name: Install Vault
+      apt:
+        name: vault
+        state: present
+        update_cache: yes
+
+    - name: Create Vault config directory
+      file:
+        path: /etc/vault.d
+        state: directory
+        owner: vault
+        group: vault
+        mode: '0755'
+
+    - name: Create Vault data directory
+      file:
+        path: /opt/vault/data
+        state: directory
+        owner: vault
+        group: vault
+        mode: '0755'
+
+    - name: Configure Vault server
+      copy:
+        dest: /etc/vault.d/vault.hcl
+        owner: vault
+        group: vault
+        mode: '0640'
+        content: |
+          ui = true
+          
+          storage "file" {
+            path = "/opt/vault/data"
+          }
+          
+          listener "tcp" {
+            address     = "0.0.0.0:8200"
+            tls_disable = 1  # For homelab; use TLS in production
+          }
+          
+          api_addr = "http://{{ ansible_default_ipv4.address }}:8200"
+          cluster_addr = "https://{{ ansible_default_ipv4.address }}:8201"
+          
+          disable_mlock = true  # For LXC compatibility
+
+    - name: Enable and start Vault service
+      systemd:
+        name: vault
+        enabled: yes
+        state: started
+        daemon_reload: yes

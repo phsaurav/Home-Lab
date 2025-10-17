@@ -1,4 +1,4 @@
-  output "tk_nas_details"{
+output "tk_nas_details"{
    value = {
      id = module.tk_nas.container_id
      name = module.tk_nas.container_name
@@ -6,11 +6,20 @@
    }
  }
 
- output "pi_hole_details"{
+output "pi_hole_details"{
    value = {
      id = module.pi_hole.container_id
      name = module.pi_hole.container_name
      ip = module.pi_hole.container_ip
+   }
+ }
+
+
+output "vault_details"{
+   value = {
+     id = module.vault_lxc.container_id
+     name = module.vault_lxc.container_name
+     ip = module.vault_lxc.container_ip
    }
  }
 

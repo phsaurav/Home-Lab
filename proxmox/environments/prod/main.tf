@@ -15,6 +15,8 @@ module "talos-k8s-1" {
   clone_template = "talos-tp"
   full_clone     = true
 
+  vm_state = "running"
+
   master_memory = 8192
   worker_memory = 4096
 
@@ -33,10 +35,11 @@ module "tk_nas" {
   password    = var.lxc_pass
   onboot = true
   unprivileged = true
+  pool = "LXC"
 
 
   # Resources
-  cores  = 2
+  cores  = 1
   memory = 4096
 
   # Storage
@@ -70,9 +73,10 @@ module "pi_hole" {
   password     = var.lxc_pass
   onboot = true
   unprivileged = true
+  pool = "LXC"
 
   # Resources
-  cores  = 1
+  cores  = 2
   memory = 2048
   swap = 0
 
@@ -96,6 +100,43 @@ module "pi_hole" {
   tags = "lxc,dns,prod"
 }
 
+module "vault_lxc" {
+  source = "../../modules/lxc"
+
+  vmid         = 333
+  target_node  = "proxmox"
+  hostname     = "vault"
+  ostemplate   = "local:vztmpl/debian-12-standard_12.12-1_amd64.tar.zst"
+  password     = var.lxc_pass
+  onboot       = true
+  unprivileged = true
+  pool = "LXC"
+
+  # Resources
+  cores  = 2
+  memory = 2048
+  swap   = 0
+
+  # Storage
+  rootfs_storage = "local-lvm"
+  rootfs_size    = "10G"
+
+  # Network
+  network_bridge = "vmbr0"
+  network_ip     = var.vault_ip
+  network_gw     = var.gateway
+
+  # Features
+  features_enabled = true
+  features = {
+    nesting = true
+  }
+
+  startup = "order=6,up=10"
+
+  tags = "lxc,vault,prod"
+}
+
 module "n8n" {
   source = "../../modules/lxc"
 
@@ -106,6 +147,7 @@ module "n8n" {
   password    = var.lxc_pass
   onboot      = false
   unprivileged = true
+  pool = "LXC"
 
   cores  = 2
   memory = 2048

@@ -1,0 +1,7 @@
+all:
+  children:
+    vault:
+      hosts:
+        vault-lxc:
+          ansible_host: "{{ vault_ip }}"
+          ansible_user: root

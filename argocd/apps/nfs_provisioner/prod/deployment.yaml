@@ -6,6 +6,8 @@ metadata:
   labels:
     app: nfs-client-provisioner
     environment: prod
+  annotations:
+    avp.kubernetes.io/path: "secret/data/prod/nfs"
 spec:
   replicas: 1
   strategy:
@@ -31,11 +33,11 @@ spec:
             - name: PROVISIONER_NAME
               value: nfs-prod
             - name: NFS_SERVER
-              value: 192.168.10.1
+              value: <server>
             - name: NFS_PATH
-              value: /mnt/nas/nfs-k8s/prod
+              value: <path>
       volumes:
         - name: nfs-client-root
           nfs:
-            server: 192.168.10.1
-            path: /mnt/nas/nfs-k8s/prod
+            server: <server>
+            path: <path>
