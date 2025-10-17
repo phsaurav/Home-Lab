@@ -54,5 +54,5 @@ argocd_helm_values:
             subPath: argocd-vault-plugin
             name: custom-tools
         envFrom:
-          - configMapRef:
+          - secretRef:
               name: argocd-vault-plugin-config
