@@ -11,6 +11,11 @@ spec:
     repoURL: https://github.com/phsaurav/Home-Lab.git
     targetRevision: main
     path: argocd/apps/nfs_provisioner/prod
+    plugin:
+      name: argocd-vault-plugin
+      env:
+        - name: AVP_K8S_ROLE
+          value: argocd
   destination:
     server: https://kubernetes.default.svc
     namespace: nfs-system
