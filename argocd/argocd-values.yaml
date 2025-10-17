@@ -1,0 +1,58 @@
+#global:
+#  domain: argocd.local
+
+configs:
+  params:
+    server.insecure: true
+
+repoServer:
+  volumes:
+    - name: custom-tools
+      emptyDir: {}
+    - name: cmp-plugin
+      configMap:
+        name: cmp-plugin
+
+  initContainers:
+    - name: download-tools
+      image: alpine:3.18
+      command: [sh, -c]
+      args:
+        - >-
+          wget -O argocd-vault-plugin
+          https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v1.18.1/argocd-vault-plugin_1.18.1_linux_amd64 &&
+          chmod +x argocd-vault-plugin &&
+          mv argocd-vault-plugin /custom-tools/
+      volumeMounts:
+        - mountPath: /custom-tools
+          name: custom-tools
+
+  extraContainers:
+    - name: avp
+      command: [/var/run/argocd/argocd-cmp-server]
+      image: quay.io/argoproj/argocd:v3.1.8
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+      volumeMounts:
+        - mountPath: /var/run/argocd
+          name: var-files
+        - mountPath: /home/argocd/cmp-server/plugins
+          name: plugins
+        - mountPath: /tmp
+          name: tmp
+        - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+          subPath: avp.yaml
+          name: cmp-plugin
+        - mountPath: /usr/local/bin/argocd-vault-plugin
+          subPath: argocd-vault-plugin
+          name: custom-tools
+      envFrom:
+        - configMapRef:
+            name: argocd-vault-plugin-config
+
+server:
+  service:
+    type: NodePort
+    nodePortHttp: 32080
+    nodePortHttps: 32443

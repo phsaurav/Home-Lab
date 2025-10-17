@@ -5,8 +5,54 @@ argocd_version: v8.6.3
 argocd_install_method: helm
 argocd_helm_repo: https://argoproj.github.io/argo-helm
 argocd_helm_chart: argo-cd
-argocd_helm_values: {}
 argocd_nodeport_enabled: false
 argocd_nodeport_http_port: 32080
 argocd_nodeport_https_port: 32443
 argocd_context_kubeconfig: /etc/kubernetes/admin.conf
+
+argocd_helm_values:
+  repoServer:
+    volumes:
+      - name: custom-tools
+        emptyDir: {}
+      - name: cmp-plugin
+        configMap:
+          name: cmp-plugin
+
+    initContainers:
+      - name: download-tools
+        image: alpine:3.18
+        command: [sh, -c]
+        args:
+          - >-
+            wget -O argocd-vault-plugin
+            https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v1.18.1/argocd-vault-plugin_1.18.1_linux_amd64 &&
+            chmod +x argocd-vault-plugin &&
+            mv argocd-vault-plugin /custom-tools/
+        volumeMounts:
+          - mountPath: /custom-tools
+            name: custom-tools
+
+    extraContainers:
+      - name: avp
+        command: [/var/run/argocd/argocd-cmp-server]
+        image: quay.io/argoproj/argocd:v2.9.3
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 999
+        volumeMounts:
+          - mountPath: /var/run/argocd
+            name: var-files
+          - mountPath: /home/argocd/cmp-server/plugins
+            name: plugins
+          - mountPath: /tmp
+            name: tmp
+          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+            subPath: avp.yaml
+            name: cmp-plugin
+          - mountPath: /usr/local/bin/argocd-vault-plugin
+            subPath: argocd-vault-plugin
+            name: custom-tools
+        envFrom:
+          - configMapRef:
+              name: argocd-vault-plugin-config
