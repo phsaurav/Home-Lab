@@ -6,9 +6,17 @@ rules:
   - apiGroups: [""]
     resources:
       - nodes
+      - nodes/proxy
+      - nodes/metrics
       - services
       - endpoints
       - pods
     verbs: ["get", "list", "watch"]
-  - nonResourceURLs: ["/metrics"]
+  - apiGroups: [""]
+    resources:
+      - configmaps
+    verbs: ["get"]
+  - nonResourceURLs:
+      - /metrics
+      - /metrics/cadvisor
     verbs: ["get"]
