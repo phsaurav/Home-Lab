@@ -12,6 +12,11 @@ kubernetes_repo_channel: https://pkgs.k8s.io/core:/stable:/v1.33/deb/
 kubernetes_repo_key_url: https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key
 kubernetes_package_version: "1.33.*"
 
+# NFS Configuration (references secret.yaml)
+nfs_enabled: true
+nfs_server: "{{ nfs_server_ip }}"
+nfs_base_path: "/mnt/nfs/k8s"
+
 common_packages:
   - apt-transport-https
   - ca-certificates

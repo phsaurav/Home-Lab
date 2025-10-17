@@ -1,0 +1,6 @@
+---
+- name: Setup NFS client on all cluster nodes
+  hosts: k8s_cluster
+  gather_facts: true
+  roles:
+    - nfs_client

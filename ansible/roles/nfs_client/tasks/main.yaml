@@ -1,0 +1,23 @@
+---
+- name: Install NFS client packages
+  apt:
+    name:
+      - nfs-common
+    state: present
+    update_cache: yes
+
+- name: Test NFS mount accessibility
+  command: "showmount -e {{ nfs_server }}"
+  register: nfs_test
+  changed_when: false
+  failed_when: false
+
+- name: Display NFS mounts available
+  debug:
+    msg: "{{ nfs_test.stdout_lines }}"
+  when: nfs_test.rc == 0
+
+- name: Warn if NFS server is unreachable
+  debug:
+    msg: "WARNING: Cannot reach NFS server {{ nfs_server }}. Check connectivity and NFS server configuration."
+  when: nfs_test.rc != 0

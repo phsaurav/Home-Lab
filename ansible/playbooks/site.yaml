@@ -6,6 +6,8 @@
     - base_setup
     - containerd
     - kube_packages
+    - role: nfs_client
+      when: nfs_enabled | default(false)
 
 - name: Bootstrap control plane
   hosts: k8s_control_plane
