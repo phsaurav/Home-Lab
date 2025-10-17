@@ -12,6 +12,11 @@ repoServer:
     - name: cmp-plugin
       configMap:
         name: cmp-plugin
+        
+  volumeMounts:
+    - name: cmp-plugin
+      mountPath: /home/argocd/cmp-server/config/plugin.yaml
+      subPath: avp.yaml
 
   initContainers:
     - name: download-tools
