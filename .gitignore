@@ -34,3 +34,9 @@ _out/**
 ansible/secret.yaml.decrypted
 ansible/secret.yaml.bak
 ansible/secret.yaml.tmp
+
+# ArgoCD
+argocd/secrets/**/secrets.yaml
+!argocd/secrets/**/secrets.yaml.enc
+argocd/apps/nfs_provisioner/dev/deployment.yaml
+argocd/apps/nfs_provisioner/prod/deployment.yaml

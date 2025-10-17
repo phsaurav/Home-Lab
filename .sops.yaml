@@ -1,3 +1,7 @@
 creation_rules:
   - path_regex: '(\.tfvars$|(^|/)backend\.tf$|(^|/)_out/.*)'
     kms: arn:aws:kms:ap-south-1:648539820216:key/08a99498-99c9-4288-9527-3c5560c50d01
+  - path_regex: 'argocd/secrets/.*/secrets\.yaml$'
+    kms: arn:aws:kms:ap-south-1:648539820216:key/08a99498-99c9-4288-9527-3c5560c50d01
+  - path_regex: 'argocd/apps/nfs_provisioner/.*/deployment\.yaml\.enc$'
+    kms: arn:aws:kms:ap-south-1:648539820216:key/08a99498-99c9-4288-9527-3c5560c50d01
