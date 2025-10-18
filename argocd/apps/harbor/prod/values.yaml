@@ -12,6 +12,20 @@ expose:
 externalURL: ((external_url))
 harborAdminPassword: ((admin_password))
 
+namespaceOverride: harbor-system
+
+chartmuseum:
+  enabled: false
+
+clair:
+  enabled: false
+
+notary:
+  enabled: false
+
+trivy:
+  enabled: false
+
 persistence:
   enabled: true
   imageChartStorage:
@@ -23,29 +37,3 @@ persistence:
       storageClass: nfs-prod
       accessMode: ReadWriteMany
       size: 20Gi
-    chartmuseum:
-      storageClass: nfs-prod
-      accessMode: ReadWriteMany
-      size: 2Gi
-    jobservice:
-      storageClass: nfs-prod
-      accessMode: ReadWriteMany
-      size: 1Gi
-    database:
-      storageClass: nfs-prod
-      accessMode: ReadWriteMany
-      size: 4Gi
-    redis:
-      storageClass: nfs-prod
-      accessMode: ReadWriteMany
-      size: 1Gi
-    trivy:
-      storageClass: nfs-prod
-      accessMode: ReadWriteMany
-      size: 2Gi
-
-volumePermissions:
-  enabled: true
-  securityContext:
-    runAsUser: 0
-    fsGroup: 1000
