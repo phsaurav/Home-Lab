@@ -9,7 +9,7 @@ expose:
     annotations:
       kubernetes.io/ingress.class: nginx
 
-externalURL: http://harbor.phsaurav.net
+externalURL: http://harbor.phsaurav.net:31529
 namespaceOverride: harbor
 
 
