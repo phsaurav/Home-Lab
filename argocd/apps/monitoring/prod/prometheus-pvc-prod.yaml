@@ -4,4 +4,9 @@ metadata:
   name: prometheus-storage
   namespace: monitoring
 spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
   storageClassName: nfs-prod

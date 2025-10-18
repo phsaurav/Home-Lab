@@ -4,4 +4,9 @@ metadata:
   name: grafana-storage
   namespace: monitoring
 spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
   storageClassName: nfs-prod
