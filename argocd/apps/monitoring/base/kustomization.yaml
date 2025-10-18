@@ -18,3 +18,5 @@ resources:
   - grafana/deployment.yaml
   - grafana/service.yaml
   - grafana/pvc.yaml
+  - kube-state-metrics/deployment.yaml
+  - node-exporter/daemonset.yaml
