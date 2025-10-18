@@ -37,3 +37,15 @@ persistence:
       storageClass: nfs-prod
       accessMode: ReadWriteMany
       size: 20Gi
+    jobservice:
+      storageClass: nfs-prod
+      accessMode: ReadWriteMany
+      size: 1Gi
+    database:
+      storageClass: nfs-prod
+      accessMode: ReadWriteOnce
+      size: 4Gi
+    redis:
+      storageClass: nfs-prod
+      accessMode: ReadWriteOnce
+      size: 1Gi
