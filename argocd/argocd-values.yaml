@@ -1,41 +1,50 @@
-#global:
-#  domain: argocd.local
-
 configs:
-  params:
-    server.insecure: true
+  secret:
+    extra:
+      VAULT_ADDR: "http://192.168.10.33:8200"
+      VAULT_CACERT: /etc/ssl/certs/ca-certificates.crt
+      AVP_TYPE: vault
+      AVP_AUTH_TYPE: approle
+      AVP_ROLE_ID: "3b0aa05e-a101-f743-a0b9-2e1bf0329ce4"
+      AVP_SECRET_ID: "a214fa84-4b48-e158-f6f7-5ea9058765b3"
+  cmp:
+    create: true
+    plugins:
+      argocd-vault-plugin:
+        generate:
+          command: ["argocd-vault-plugin"]
+          args: ["generate -s argocd:argocd-secret", "./"]
+      argocd-vault-plugin-helm:
+        init:
+          command:
+            - sh
+            - -c
+            - |
+              helm repo add argo https://argoproj.github.io/argo-helm
+              helm dependency build
+        generate:
+          command:
+            - sh
+            - -c
+            - |
+              helm template $ARGOCD_APP_NAME --include-crds . |
+              argocd-vault-plugin generate -
+      argocd-vault-plugin-kustomize:
+        generate:
+          command: ["sh", "-c"]
+          args: ["kustomize build . | argocd-vault-plugin generate -s argocd:argocd-secret -"]
+
+  cm:
+    kustomize.buildOptions: --enable-helm
 
 repoServer:
-  volumes:
-    - name: custom-tools
-      emptyDir: {}
-    - name: cmp-plugin
-      configMap:
-        name: cmp-plugin
-        
-  volumeMounts:
-    - name: cmp-plugin
-      mountPath: /home/argocd/cmp-server/config/plugin.yaml
-      subPath: avp.yaml
-
-  initContainers:
-    - name: download-tools
-      image: alpine:3.18
-      command: [sh, -c]
-      args:
-        - >-
-          wget -O argocd-vault-plugin
-          https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v1.18.1/argocd-vault-plugin_1.18.1_linux_amd64 &&
-          chmod +x argocd-vault-plugin &&
-          mv argocd-vault-plugin /custom-tools/
-      volumeMounts:
-        - mountPath: /custom-tools
-          name: custom-tools
-
   extraContainers:
-    - name: avp
-      command: [/var/run/argocd/argocd-cmp-server]
-      image: quay.io/argoproj/argocd:v3.1.8
+    - name: argocd-vault-plugin
+      command: ["/var/run/argocd/argocd-cmp-server"]
+      image: quay.io/argoproj/argocd:v2.10.8
+      envFrom:
+        - secretRef:
+            name: argocd-secret
       securityContext:
         runAsNonRoot: true
         runAsUser: 999
@@ -44,17 +53,122 @@ repoServer:
           name: var-files
         - mountPath: /home/argocd/cmp-server/plugins
           name: plugins
-        - mountPath: /tmp
-          name: tmp
         - mountPath: /home/argocd/cmp-server/config/plugin.yaml
-          subPath: avp.yaml
-          name: cmp-plugin
-        - mountPath: /usr/local/bin/argocd-vault-plugin
+          subPath: argocd-vault-plugin.yaml
+          name: argocd-cmp-cm
+        - mountPath: /tmp
+          name: cmp-tmp
+        - name: custom-tools
           subPath: argocd-vault-plugin
-          name: custom-tools
+          mountPath: /usr/local/bin/argocd-vault-plugin
+        - name: custom-tools
+          subPath: kustomize
+          mountPath: /usr/local/bin/kustomize
+        - name: ca-certificates
+          mountPath: /etc/ssl/certs/
+    - name: argocd-vault-plugin-helm
+      command: ["/var/run/argocd/argocd-cmp-server"]
+      image: quay.io/argoproj/argocd:v2.10.8
       envFrom:
         - secretRef:
-            name: argocd-vault-plugin-config
+            name: argocd-secret
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+      volumeMounts:
+        - mountPath: /var/run/argocd
+          name: var-files
+        - mountPath: /home/argocd/cmp-server/plugins
+          name: plugins
+        - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+          subPath: argocd-vault-plugin-helm.yaml
+          name: argocd-cmp-cm
+        - mountPath: /tmp
+          name: cmp-tmp
+        - name: custom-tools
+          subPath: argocd-vault-plugin
+          mountPath: /usr/local/bin/argocd-vault-plugin
+        - name: ca-certificates
+          mountPath: /etc/ssl/certs/
+    - name: argocd-vault-plugin-kustomize
+      command: ["/var/run/argocd/argocd-cmp-server"]
+      image: quay.io/argoproj/argocd:v2.10.8
+      envFrom:
+        - secretRef:
+            name: argocd-secret
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+      volumeMounts:
+        - mountPath: /var/run/argocd
+          name: var-files
+        - mountPath: /home/argocd/cmp-server/plugins
+          name: plugins
+        - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+          subPath: argocd-vault-plugin-kustomize.yaml
+          name: argocd-cmp-cm
+        - mountPath: /tmp
+          name: cmp-tmp
+        - name: custom-tools
+          subPath: argocd-vault-plugin
+          mountPath: /usr/local/bin/argocd-vault-plugin
+        - name: custom-tools
+          subPath: kustomize
+          mountPath: /usr/local/bin/kustomize
+        - name: custom-tools
+          subPath: helm
+          mountPath: /usr/local/bin/helm
+        - name: ca-certificates
+          mountPath: /etc/ssl/certs/
+
+  initContainers:
+    - name: download-tools
+      image: alpine:3.20
+      command: [sh, -c]
+      env:
+        - name: AVP_VERSION
+          value: "1.16.0"
+      args:
+        - >
+          wget -O argocd-vault-plugin
+          https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v${AVP_VERSION}/argocd-vault-plugin_${AVP_VERSION}_linux_amd64 &&
+          chmod +x argocd-vault-plugin &&
+          mv argocd-vault-plugin /custom-tools/ &&
+          wget -qO kustomize.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz &&
+          tar -xvzf kustomize.tar.gz &&
+          chmod +x kustomize &&
+          mv kustomize /custom-tools/ &&
+          wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz -O - | tar xz &&
+          mv linux-amd64/helm /custom-tools/ &&
+          chmod +x /custom-tools/helm
+      volumeMounts:
+        - name: custom-tools
+          mountPath: /custom-tools
+
+    - name: download-ca-certificates
+      image: alpine:3.20
+      command: [sh, -c]
+      args:
+        - >
+          apk --no-cache add ca-certificates &&
+          cp /etc/ssl/certs/ca-certificates.crt /ca-certificates
+      volumeMounts:
+        - name: ca-certificates
+          mountPath: /ca-certificates
+
+  volumeMounts:
+    - mountPath: /custom-tools
+      name: custom-tools
+  volumes:
+    - name: argocd-cmp-cm
+      configMap:
+        name: argocd-cmp-cm
+    - name: cmp-tmp
+      emptyDir: {}
+    - name: custom-tools
+      emptyDir: {}
+    - name: ca-certificates
+      emptyDir: {}
 
 server:
   service:

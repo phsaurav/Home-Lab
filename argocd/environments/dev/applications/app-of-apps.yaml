@@ -11,6 +11,8 @@ spec:
     repoURL: https://github.com/phsaurav/Home-Lab.git
     targetRevision: main
     path: argocd/environments/dev/applications/
+    plugin:
+      name: argocd-vault-plugin-kustomize
     directory:
       recurse: false
       exclude: 'app-of-apps.yaml'

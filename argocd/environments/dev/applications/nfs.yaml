@@ -12,7 +12,7 @@ spec:
     targetRevision: main
     path: argocd/apps/nfs_provisioner/dev
     plugin:
-      name: argocd-vault-plugin
+      name: argocd-vault-plugin-kustomize
   destination:
     server: https://kubernetes.default.svc
     namespace: nfs-system
