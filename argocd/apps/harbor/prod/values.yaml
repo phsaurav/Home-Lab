@@ -1,15 +1,17 @@
 expose:
-  type: nodePort
+  type: ingress
   tls:
     enabled: false
-  nodePort:
-    name: harbor
-    ports:
-      http:
-        port: 80
-        nodePort: 30080
+  ingress:
+    hosts:
+      core: harbor.phsaurav.net
+    className: nginx
+    annotations:
+      kubernetes.io/ingress.class: nginx
 
+externalURL: http://harbor.phsaurav.net
 namespaceOverride: harbor
+
 
 chartmuseum:
   enabled: false
