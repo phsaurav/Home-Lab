@@ -16,6 +16,10 @@ spec:
     spec:
       hostNetwork: true
       hostPID: true
+      securityContext:
+        runAsNonRoot: false
+        runAsUser: 0
+        fsGroup: 0
       containers:
         - name: node-exporter
           image: prom/node-exporter:v1.8.2
