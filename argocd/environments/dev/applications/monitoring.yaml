@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/phsaurav/Home-Lab.git
     targetRevision: main
-    path: argocd/apps/monitoring/base
+    path: argocd/apps/monitoring/dev
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
