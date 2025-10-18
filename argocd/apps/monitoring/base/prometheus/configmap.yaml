@@ -83,9 +83,9 @@ data:
       - job_name: 'kube-state-metrics'
         kubernetes_sd_configs:
           - role: endpoints
-              namespaces:
-                names:
-                  - monitoring
+            namespaces:
+              names:
+                - monitoring
         relabel_configs:
           - source_labels: [__meta_kubernetes_service_name]
             action: keep
