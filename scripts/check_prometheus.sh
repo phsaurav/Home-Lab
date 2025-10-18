@@ -89,9 +89,12 @@ else
     exit 1
 fi
 
+
 # Check if Prometheus is scraping itself
 print_info "Checking if Prometheus is scraping itself..."
-PROM_UP=$(curl -s "${PROM_URL}/api/v1/query?query=up{job=\"prometheus\"}" | jq -r '.data.result[0].value[1]')
+QUERY="up{job='prometheus'}"
+ENCODED_QUERY=$(printf '%s' "$QUERY" | jq -sRr @uri)
+PROM_UP=$(curl -s "${PROM_URL}/api/v1/query?query=${ENCODED_QUERY}" | jq -r '.data.result[0].value[1]')
 if [ "$PROM_UP" == "1" ]; then
     print_success "Prometheus is scraping itself (up=1)"
 else
