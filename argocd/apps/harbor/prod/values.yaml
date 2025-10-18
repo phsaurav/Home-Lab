@@ -39,7 +39,7 @@ persistence:
       size: 20Gi
     jobservice:
       storageClass: nfs-prod
-      accessMode: ReadWriteMany
+      accessMode: ReadWriteOnce
       size: 1Gi
     database:
       storageClass: nfs-prod
