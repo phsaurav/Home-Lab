@@ -81,8 +81,18 @@ data:
 
       # kube-state-metrics
       - job_name: 'kube-state-metrics'
-        static_configs:
-          - targets: ['kube-state-metrics.monitoring.svc.cluster.local:8080']
+        kubernetes_sd_configs:
+          - role: endpoints
+              namespaces:
+                names:
+                  - monitoring
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: kube-state-metrics
+          - source_labels: [__meta_kubernetes_endpoint_port_name]
+            action: keep
+            regex: http-metrics
 
       # Kubernetes service endpoints
       - job_name: 'kubernetes-service-endpoints'
