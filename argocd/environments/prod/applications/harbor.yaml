@@ -30,4 +30,17 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
+  ignoreDifferences:
+    - group: apps
+      kind: StatefulSet
+      name: harbor-database
+      namespace: harbor
+      jsonPointers:
+        - /spec/volumeClaimTemplates/0/metadata/creationTimestamp
+    - group: apps
+      kind: StatefulSet
+      name: harbor-redis
+      namespace: harbor
+      jsonPointers:
+        - /spec/volumeClaimTemplates/0/metadata/creationTimestamp
   revisionHistoryLimit: 5
