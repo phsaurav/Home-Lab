@@ -8,6 +8,7 @@ spec:
   description: HomeLab applications and infrastructure
   sourceRepos:
     - 'https://github.com/phsaurav/Home-Lab.git'
+    - 'https://helm.goharbor.io'
   destinations:
     - namespace: '*'
       server: https://kubernetes.default.svc

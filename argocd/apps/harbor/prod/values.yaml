@@ -1,0 +1,51 @@
+expose:
+  type: nodePort
+  tls:
+    enabled: false
+  nodePort:
+    name: harbor
+    ports:
+      http:
+        port: 80
+        nodePort: 30080
+
+externalURL: ((external_url))
+harborAdminPassword: ((admin_password))
+
+persistence:
+  enabled: true
+  imageChartStorage:
+    type: filesystem
+    filesystem:
+      rootdirectory: /storage
+  persistentVolumeClaim:
+    registry:
+      storageClass: nfs-prod
+      accessMode: ReadWriteMany
+      size: 20Gi
+    chartmuseum:
+      storageClass: nfs-prod
+      accessMode: ReadWriteMany
+      size: 2Gi
+    jobservice:
+      storageClass: nfs-prod
+      accessMode: ReadWriteMany
+      size: 1Gi
+    database:
+      storageClass: nfs-prod
+      accessMode: ReadWriteMany
+      size: 4Gi
+    redis:
+      storageClass: nfs-prod
+      accessMode: ReadWriteMany
+      size: 1Gi
+    trivy:
+      storageClass: nfs-prod
+      accessMode: ReadWriteMany
+      size: 2Gi
+
+volumePermissions:
+  enabled: true
+  securityContext:
+    runAsUser: 0
+    fsGroup: 1000
