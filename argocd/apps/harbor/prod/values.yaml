@@ -9,9 +9,6 @@ expose:
         port: 80
         nodePort: 30080
 
-externalURL: ((external_url))
-harborAdminPassword: ((admin_password))
-
 namespaceOverride: harbor
 
 chartmuseum:

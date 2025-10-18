@@ -17,6 +17,11 @@ spec:
         releaseName: harbor
         valueFiles:
           - $values/argocd/apps/harbor/prod/values.yaml
+        parameters:
+          - name: externalURL
+            value: <external_url>
+          - name: harborAdminPassword
+            value: <admin_password>
     - repoURL: https://github.com/phsaurav/Home-Lab.git
       targetRevision: main
       ref: values
