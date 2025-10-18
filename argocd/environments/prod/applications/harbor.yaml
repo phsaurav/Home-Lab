@@ -35,12 +35,12 @@ spec:
       kind: StatefulSet
       name: harbor-database
       namespace: harbor
-      jqPathExpressions:
-        - .spec.volumeClaimTemplates[].metadata.creationTimestamp
+      jsonPointers:
+        - /spec/volumeClaimTemplates/metadata
     - group: apps
       kind: StatefulSet
       name: harbor-redis
       namespace: harbor
-      jqPathExpressions:
-        - .spec.volumeClaimTemplates[].metadata.creationTimestamp
+      jsonPointers:
+        - /spec/volumeClaimTemplates/metadata
   revisionHistoryLimit: 5
