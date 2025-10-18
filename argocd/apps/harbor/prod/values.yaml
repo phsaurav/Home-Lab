@@ -12,7 +12,7 @@ expose:
 externalURL: ((external_url))
 harborAdminPassword: ((admin_password))
 
-namespaceOverride: harbor-system
+namespaceOverride: harbor
 
 chartmuseum:
   enabled: false
