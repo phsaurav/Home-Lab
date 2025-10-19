@@ -19,92 +19,92 @@ The whole architecture enforces a security-first posture by managing all credent
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/proxmox/proxmox-original-wordmark.svg"></td>
-        <td><a href="[ProxMox](https://www.proxmox.com/en/products/proxmox-virtual-environment/overview)">Proxmox VE</a></td>
+        <td><a href="https://www.proxmox.com/en/products/proxmox-virtual-environment/overview">Proxmox VE</a></td>
         <td>The backbone of this homelab is an open-source server virtualization platform. All LXC containers and VMs are running on this environment.</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg"></td>
-        <td><a href="[Terraform](https://developer.hashicorp.com/terraform)">Terraform</a></td>
+        <td><a href="https://developer.hashicorp.com/terraform">Terraform</a></td>
         <td>This is the Infrastructure As Code tool that provisions assets inside Proxmox VE and supporting assets in Cloud. Here this provisions two seperate environments Dev and Prod. Read this doc to learn more about the implementation <a href="proxmox/readme.md"> Here </a></td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ubuntu/ubuntu-original.svg"></td>
-        <td><a href="[Ubuntu](https://ubuntu.com/server)">Ubuntu Server</a></td>
+        <td><a href="https://ubuntu.com/server">Ubuntu Server</a></td>
         <td>Base OS for development VMs.</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/debian/debian-original.svg"></td>
-        <td><a href="[Debian](https://www.debian.org/)">Debian</a></td>
+        <td><a href="https://www.debian.org/">Debian</a></td>
         <td>Base OS for LXC Containers.</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/talos/talos-original.svg"></td>
-        <td><a href="[Talos OS](https://www.talos.dev/)">Talos</a></td>
+        <td><a href="https://www.talos.dev/">Talos</a></td>
         <td>Talos Linux is a Kubernetes-optimized Linux distro. This is the base OS for the main Kubernetes cluster in the Prod environment. Read this doc to learn more about the implemenation<a href="talos/readme.md"> Here </a></td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ansible/ansible-original.svg"></td>
-        <td><a href="[Ansible](https://docs.ansible.com/ansible/latest/index.html)">Ansible</a></td>
+        <td><a href="https://docs.ansible.com/ansible/latest/index.html">Ansible</a></td>
         <td>Configuration management tool for VMs and Containers. Read this doc to learn more about the implemenation<a href="ansible/readme.md"> Here </a> </td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/argocd/argocd-original.svg"></td>
-        <td><a href="[ArgoCD](https://argo-cd.readthedocs.io/en/stable/)">ArgoCD</a></td>
+        <td><a href="https://argo-cd.readthedocs.io/en/stable/">ArgoCD</a></td>
         <td>GitOps tool built to deploy applications to Kubernetes. Read this doc to learn more about the implemenation<a href="argocd/readme.md"> Here </a></td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg"></td>
-        <td><a href="[Kubernetes](https://argo-cd.readthedocs.io/en/stable/)">Kubernetes</a></td>
+        <td><a href="https://argo-cd.readthedocs.io/en/stable/">Kubernetes</a></td>
         <td>Container-orchestration system, the backbone of dev and prod environment</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/helm/helm-original.svg"></td>
-        <td><a href="[Helm](https://helm.sh/docs/)">Helm</a></td>
+        <td><a href="https://helm.sh/docs/">Helm</a></td>
         <td>Package Manager for Kubernetes</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"></td>
-        <td><a href="[Docker](https://argo-cd.readthedocs.io/en/stable/)">Docker</a></td>
+        <td><a href="https://argo-cd.readthedocs.io/en/stable/">Docker</a></td>
         <td>Primary Containerization Platform</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg"></td>
-        <td><a href="[Grafana](https://grafana.com/grafana/?plcmt=products-nav)">Grafana</a></td>
+        <td><a href="https://grafana.com/grafana/?plcmt=products-nav">Grafana</a></td>
         <td>Kubernetes cluster observation and visualization tool.</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg"></td>
-        <td><a href="[Prometheus](https://prometheus.io/)">Prometheus</a></td>
+        <td><a href="https://prometheus.io/">Prometheus</a></td>
         <td>Kubernetes cluster log aggregation tool.</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vault/vault-original.svg"></td>
-        <td><a href="[Vault](https://developer.hashicorp.com/vault)">Hashicorp Vault</a></td>
+        <td><a href="https://developer.hashicorp.com/vault">Hashicorp Vault</a></td>
         <td>Secret management system for the Homelab. Integrated with ArgoCD via ArgoCD Vault Plugin.</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg"></td>
-        <td><a href="[Nginx](https://github.com/kubernetes/ingress-nginx)">Nginx</a></td>
+        <td><a href="https://github.com/kubernetes/ingress-nginx">Nginx</a></td>
         <td>Kubernetes Ingress Controller.</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/raspberrypi/raspberrypi-original.svg"></td>
-        <td><a href="[PiHole](https://pi-hole.net/)">Pi-hole</a></td>
+        <td><a href="https://pi-hole.net/">Pi-hole</a></td>
         <td>Local DNS server for the HomeLab.</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg"></td>
-        <td><a href="[CloudFlare](https://developers.cloudflare.com/)">Cloudflare</a></td>
+        <td><a href="https://developers.cloudflare.com/">Cloudflare</a></td>
         <td>DNS Provider and Tunnel.</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/harbor/harbor-original.svg"></td>
-        <td><a href="[Harbor](https://developers.cloudflare.com/)">Harbor</a></td>
+        <td><a href="https://developers.cloudflare.com/">Harbor</a></td>
         <td>Self-hosted Image Registry Management Tool</td>
     </tr>
     <tr>
         <td><img width="32" src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Gitea_Logo.svg"></td>
-        <td><a href="[Gitea](https://about.gitea.com/)">Gitea</a></td>
+        <td><a href="https://about.gitea.com/">Gitea</a></td>
         <td>Self-hosted Git Repository Hosting</td>
     </tr>
 </table>
