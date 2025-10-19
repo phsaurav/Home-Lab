@@ -1,5 +1,7 @@
 # PH's HomeLab
 
+**[Tech Stack](#tech-stack)** • **[Directory Overview](#directory-overview)** • **[Gallery](#gallery)** • **[Road Map](#road-map)** 
+
 A bare-metal `Proxmox` infrastructure provisioned using `Terraform` (IaC) and established with a complete GitOps automation pipeline with `ArgoCD` and `Ansible`, hosting a segregated `Dev` environment with an `Ubuntu` cluster for continuous experimentation with Cloud, DevOps, Networking, and Automation. 
 
 Alongside it has a `Production` environment consisting of lightweight `LXC` containers providing essential services, and a lightweight `Talos` Linux Kubernetes cluster for project and service deployment, focusing on high availability and disaster recovery. 
@@ -8,7 +10,36 @@ The whole architecture enforces a security-first posture by managing all credent
 
 <img width="5747" height="3763" alt="HomeLab_Arch" src="https://github.com/user-attachments/assets/3573dc79-e3cd-4912-b267-feeca986b837" />
 
-## [Directory Overview](docs/proxmox.md)
+## Tech Stack
+<table>
+    <tr>
+        <th>Logo</th>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/proxmox/proxmox-original-wordmark.svg"></td>
+        <td><a href="[ProxMox](https://www.proxmox.com/en/products/proxmox-virtual-environment/overview)">Proxmox VE</a></td>
+        <td>The backbone of this homelab is an open-source server virtualization platform. All LXC containers and VMs are running on this environment.</td>
+    </tr>
+    <tr>
+        <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ubuntu/ubuntu-original.svg"></td>
+        <td><a href="[Ubuntu](https://ubuntu.com/server)">Ubuntu Server</a></td>
+        <td>Base OS for development VMs.</td>
+    </tr>
+    <tr>
+        <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/debian/debian-original.svg"></td>
+        <td><a href="[Debian](https://www.debian.org/)">Debian</a></td>
+        <td>Base OS for LXC Containers.</td>
+    </tr>
+    <tr>
+        <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/talos/talos-original.svg"></td>
+        <td><a href="[Talos OS](https://www.talos.dev/)">Talos</a></td>
+        <td>Talos Linux is a Kubernetes-optimized Linux distro. This is the base OS for the main Kubernetes cluster in the production environment</td>
+    </tr>
+</table>
+
+## Directory Overview
 ```txt
 HomeLab/
 ├── .envrc                           # Direnv variables automation
@@ -75,4 +106,19 @@ HomeLab/
 │   └── readme.md                    # Talos documentation
 └── vault/                           # HashiCorp Vault configurations
     └── secret.yaml.enc              # Vault encrypted configuration
-    ```
+```
+
+## Gallery
+
+## Road Map
+
+
+
+
+
+
+
+
+
+
+
