@@ -179,8 +179,28 @@ HomeLab/
 ```
 
 ## Gallery
+| Proxmox Dashboard                                                                                               |
+| :--:                                                                                                            |
+|![Screenshot 2025-10-19 at 1 29 23 AM-min](https://github.com/user-attachments/assets/757eef7c-5aca-48e0-bd67-6fe207852e6d)|
+| Grafana Cluster Monitoring Dashboard                                                                                      |
+|![Screenshot 2025-10-19 at 1 04 55 AM-min](https://github.com/user-attachments/assets/9442c134-c405-46f4-8601-3b266d26a009)|
+| GitOps: ArgoCD                                                                                  |
+|![Screenshot 2025-10-19 at 1 12 15 AM-min](https://github.com/user-attachments/assets/4e4b8732-cffd-4dff-bbf5-1eccbf849ad8)|
+| Secret Management: Hashicorp Vault                                                                                 |
+|![Screenshot 2025-10-19 at 1 08 26 AM-min](https://github.com/user-attachments/assets/de9ee196-8590-4935-b0fb-9c181d169548)|
+| Local DNS Management: Pi-hole                                                                                 |
+|![Screenshot 2025-10-19 at 1 09 25 AM-min](https://github.com/user-attachments/assets/1fba1e59-8466-45a0-a530-316fdf691ebb)|
+| Gitea Self-hosted Git Repository Management                                                                                 |
+|![Screenshot 2025-10-19 at 1 22 52 AM-min](https://github.com/user-attachments/assets/5f2374c8-c491-494c-b656-db9daf69a1c5)|
+| Harbor Self-hosted Image Repository                                                                                       |
+|![Screenshot 2025-10-19 at 1 37 42 AM-min](https://github.com/user-attachments/assets/6cdc14be-5e41-40f8-801f-25986a9664ae)|
+| TurnKey File Server                                                                                 |
+|![Screenshot 2025-10-19 at 1 13 30 AM-min](https://github.com/user-attachments/assets/1d98f65d-b51a-4cef-a453-cd4ab3062870)|
+| Beautiful Physical Server :-)                                                                                 |
+|![540984190_1901704603707289_7904067712713427409_n](https://github.com/user-attachments/assets/f52af248-9efe-47df-a810-2b5c689f6af4)|
 
 ## Road Map
+
 
 
 
