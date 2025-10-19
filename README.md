@@ -6,7 +6,7 @@ A bare-metal `Proxmox` infrastructure provisioned using `Terraform` (IaC) and es
 
 Alongside it has a `Production` environment consisting of lightweight `LXC` containers providing essential services, and a lightweight `Talos` Linux Kubernetes cluster for project and service deployment, focusing on high availability and disaster recovery. 
 
-The whole architecture enforces a security-first posture by managing all credentials through HashiCorp Vault, Ansible Vault, and SOPS encryption as necessary.
+The whole architecture enforces a security-first posture by managing all credentials through HashiCorp `Vault`, Ansible Vault, and `SOPS` encryption as necessary.
 
 <img width="5747" height="3763" alt="HomeLab_Arch" src="https://github.com/user-attachments/assets/3573dc79-e3cd-4912-b267-feeca986b837" />
 
@@ -25,7 +25,7 @@ The whole architecture enforces a security-first posture by managing all credent
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg"></td>
         <td><a href="https://developer.hashicorp.com/terraform">Terraform</a></td>
-        <td>This is the Infrastructure As Code tool that provisions assets inside Proxmox VE and supporting assets in Cloud. Here this provisions two seperate environments Dev and Prod. Read this doc to learn more about the implementation <a href="proxmox/readme.md"> Here </a></td>
+        <td>This is the Infrastructure As Code tool that provisions assets inside Proxmox VE and supporting assets in the Cloud. Here, these provisions create two separate environments, Dev and Prod. Read this doc to learn more about the implementation <a href="proxmox/readme.md"> Here </a></td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ubuntu/ubuntu-original.svg"></td>
