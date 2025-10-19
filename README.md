@@ -1,77 +1,78 @@
 # PH's HomeLab
-My Over-Engineered playground, architected with a bare-metal Proxmox infrastructure
-provisioned using Terraform (IaC) , hosting segregated Dev/Prod environments with separate
-Kubernetes clusters for deployment of projects and continuous experimentation with Cloud, DevOps,
-Networking, and Automation.
 
-Established a complete GitOps pipeline with Ansible and ArgoCD for zero-touch infrastructure
-configuration and application deployment, enforcing a security-first posture by managing all credentials
-through HashiCorp Vault and SOPS encryption.
+A bare-metal `Proxmox` infrastructure provisioned using `Terraform` (IaC) and established with a complete GitOps automation pipeline with `ArgoCD` and `Ansible`, hosting a segregated `Dev` environment with an `Ubuntu` cluster for continuous experimentation with Cloud, DevOps, Networking, and Automation. 
 
-![img.png](img.png)
+Alongside it has a `Production` environment consisting of lightweight `LXC` containers providing essential services, and a lightweight `Talos` Linux Kubernetes cluster for project and service deployment, focusing on high availability and disaster recovery. 
 
-## [Overview](docs/proxmox.md)
-```md
+The whole architecture enforces a security-first posture by managing all credentials through HashiCorp Vault, Ansible Vault, and SOPS encryption as necessary.
+
+<img width="5747" height="3763" alt="HomeLab_Arch" src="https://github.com/user-attachments/assets/3573dc79-e3cd-4912-b267-feeca986b837" />
+
+## [Directory Overview](docs/proxmox.md)
+```txt
 HomeLab/
-├── .envrc                           # Dir Env Variables
-├── .git/
-├── .gitignore
+├── .envrc                           # Direnv variables automation
+├── .gitignore                       # Git ignore patterns
 ├── .sops.yaml                       # SOPS encryption configuration
-├── README.md                        # Repository Main Documentation
-├── proxmox/                         # Terraform for Proxmox Infrastructure
-│   ├── environments                 # Infrastructure segments
-│   │   ├── dev                      # Development Infrastructure
-│   │   │   ├── backend.tf           # Development Backend Configuration (Sensetive)
-│   │   │   ├── dev.tfvars           # Dev Variables (Sensetive)
-│   │   │   ├── main.tf
-│   │   │   ├── outputs.tf
-│   │   │   ├── variables.tf
-│   │   │   └── versions.tf
-│   │   └── prod
-│   │       ├── backend.tf
-│   │       ├── main.tf
-│   │       ├── outputs.tf
-│   │       ├── prod.tfvars          # Prod Variables (Sensetive)
-│   │       ├── variables.tf
-│   │       └── versions.tf
-│   ├── modules                      # Different Terraform Moudules
-│   │   ├── lxc                      # LXC Container Module
-│   │   ├── talos-k8s                # Talos Dynamic K8s Cluster Module
-│   │   ├── talos-vm                 # Talos VM Module
-│   │   ├── ubuntu-k8s               # Ubuntu Dynamic K8s Cluster Module
-│   │   └── ubuntu-vm                # Ubuntu VM Module
-│   └── readme.md                    # ProxMox Terraform Infra Documentation
-├── talos/                             # Talos cluster configs
-│   ├── _out                           # All generated config
-│   │   ├── encrypt.sh                 # Script to encrypt sensetive configuration files
-│   │   ├── decrypt.sh                 # Script to decrypt sensetive configuration files
-│   │   └── ...                        # Generated configuration files
-│   ├── patches                        # Patches for Controlplane and Workers
-│   ├── secrets.yaml                   # Ansible Vault Secret
-│   └── readme.md
-└── ansible/                                # Ansible automation
-    ├── ansible.cfg                         # Ansible common config
-    ├── secrets.yaml                        # Ansible Vault Secret
-    ├── readme.md                           # Ansible Documentation
-    ├── inventories/                        # All inventory directory
-    │   └── dev/                            # Dev Environement
-    │       ├── hosts.yaml                   # Holds all Dev Hosts Data
-    │       └── group_vars/                 # Group Variables
-    │           ├── all.yaml
-    │           ├── k8s_control_plane.yaml
-    │           └── k8s_workers.yaml
-    ├── playbooks/
-    │   ├── argocd-dev.yaml          # ArgoCD Setup to Dev Server
-    │   ├── site.yaml                # Initial Setup for all hosts
-    │   ├── cluster_init.yaml        # Applied to control-plane only
-    │   ├── join_workers.yaml        # Applied to workers only
-    │   └── support_tools.yaml       # Optional extras
-    └── roles/
-        ├── argocd/
-        ├── base_setup/
-        ├── containerd/
-        ├── kube_packages/
-        ├── control_plane/
-        ├── node_join/
-        └── support_tools/
+├── LICENSE                          # AGPL open source license
+├── README.md                        # Repository main documentation
+├── ansible/                         # Ansible automation configurations
+│   ├── ansible.cfg                  # Ansible common configuration
+│   ├── inventories/                 # Inventory configurations
+│   │   ├── dev/                     # Development inventory
+│   │   └── prod/                    # Production inventory
+│   ├── playbooks/                   # Ansible playbooks
+│   │   ├── argocd-dev.yaml          # ArgoCD setup for dev server
+│   │   ├── cluster_init.yaml        # Control plane initialization
+│   │   ├── join_workers.yaml        # Worker nodes joining
+│   │   ├── nfs_setup.yaml           # NFS Proxmox setup
+│   │   ├── site.yaml                # Initial setup for all hosts
+│   │   ├── support_tools.yaml       # Optional support tools
+│   │   └── vault_setup.yaml         # Vault production LXC setup
+│   ├── roles/                       # Ansible roles
+│   │   ├── argocd/                  # ArgoCD role
+│   │   ├── base_setup/              # Base setup role
+│   │   ├── containerd/              # Containerd role
+│   │   ├── control_plane/           # Control plane role
+│   │   ├── kube_packages/           # Kubernetes packages role
+│   │   ├── nfs_client/              # NFS client role
+│   │   ├── node_join/               # Node joining role
+│   │   └── support_tools/           # Support tools role
+│   ├── secrets.yaml                 # Ansible Vault secrets
+│   └── readme.md                    # Ansible documentation
+├── argocd/                          # ArgoCD configurations
+│   ├── apps/                        # Application manifests
+│   │   ├── gitea/                   # Gitea application
+│   │   ├── harbor/                  # Harbor application
+│   │   ├── monitoring/              # Prometheus + Grafana app
+│   │   └── nfs_provisioner/         # NFS storage provisioner
+│   ├── base/                        # ArgoCD base project configuration
+│   ├── environments/                # Environment-specific configurations
+│   │   ├── dev/                     # Development environment
+│   │   └── prod/                    # Production environment
+│   └── readme.md                    # ArgoCD implementation documentation
+├── docs/                            # Detailed feature-specific documentation
+├── proxmox/                         # Terraform IaC for Proxmox
+│   ├── environments/                # Infrastructure segments
+│   │   ├── dev/                     # Development segment
+│   │   └── prod/                    # Production segment
+│   ├── modules/                     # Terraform modules
+│   │   ├── lxc/                     # LXC container module
+│   │   ├── talos-k8s/               # Talos dynamic K8s cluster module
+│   │   ├── talos-vm/                # Talos VM module
+│   │   ├── ubuntu-k8s/              # Ubuntu dynamic K8s cluster module
+│   │   └── ubuntu-vm/               # Ubuntu VM module
+│   └── readme.md                    # Proxmox Terraform infrastructure documentation
+├── scripts/                         # Automation scripts
+│   └── check_prometheus.sh          # K8s Prometheus log aggregation check
+├── talos/                           # Talos K8s cluster configurations
+│   ├── _out/                        # Generated configurations
+│   │   ├── decrypt.sh               # Script to decrypt sensitive configurations
+│   │   ├── encrypt.sh               # Script to encrypt sensitive configurations
+│   │   └── ...                      # Other generated configuration files
+│   ├── patches/                     # Patches for control plane and workers
+│   ├── secrets.yaml                 # Ansible Vault secrets
+│   └── readme.md                    # Talos documentation
+└── vault/                           # HashiCorp Vault configurations
+    └── secret.yaml.enc              # Vault encrypted configuration
     ```
