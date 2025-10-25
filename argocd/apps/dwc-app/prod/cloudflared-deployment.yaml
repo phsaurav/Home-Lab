@@ -18,24 +18,37 @@ spec:
       - name: cloudflared
         image: cloudflare/cloudflared:latest
         args:
-        - tunnel
-        - --no-autoupdate
-        - run
-        - --token
-        - $(TUNNEL_TOKEN)
+          - tunnel
+          - --no-autoupdate
+          - run
+          - --token
+          - $(TUNNEL_TOKEN)
+          - --metrics
+          - 0.0.0.0:2000
         env:
-        - name: TUNNEL_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: cloudflared-token
-              key: token
+          - name: TUNNEL_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: cloudflared-token
+                key: token
+        ports:
+          - name: metrics
+            containerPort: 2000
+            protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 2000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 3
         livenessProbe:
           httpGet:
             path: /ready
             port: 2000
-          failureThreshold: 1
-          initialDelaySeconds: 10
+          initialDelaySeconds: 30
           periodSeconds: 10
+          failureThreshold: 3
         resources:
           requests:
             memory: "64Mi"
