@@ -36,4 +36,4 @@ spec:
       kind: PersistentVolumeClaim
       jsonPointers:
         - /metadata/creationTimestamp
-  revisionHistoryLimit: 5
+  revisionHistoryLimit: 3
