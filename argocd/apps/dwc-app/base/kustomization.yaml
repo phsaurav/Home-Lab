@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dwc
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - secret.yaml
+  - dockerhub-secret.yaml
+  - mysql-configmap.yaml
+  - mysql-pvc.yaml
+  - mysql-deployment.yaml
+  - mysql-service.yaml
+  - app-deployment.yaml
+  - app-service.yaml

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initdb
+  namespace: dwc
+data:
+  init.sql: |
+    -- Database initialization
+    CREATE DATABASE IF NOT EXISTS dwcDB;
+    USE dwcDB;

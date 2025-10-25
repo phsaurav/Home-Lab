@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: dwc
+data:
+  DB_HOST: "mysql-service"
+  DB_PORT: "3306"
+  APP_ENV: "dev"
+  DB_DATABASE: "dwcDB"
+  BASE_URL: "https://dwc.phsaurav.net"

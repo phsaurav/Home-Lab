@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dwc-app
+  namespace: dwc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dwc-app
+  template:
+    metadata:
+      labels:
+        app: dwc-app
+    spec:
+      containers:
+      - name: app
+        image: drivewithclive/dwc-backend:5a595800133622b12efd9b888d9e4388644faf97
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_PORT
+        - name: APP_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: APP_ENV
+        - name: DB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_DATABASE
+        - name: BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: BASE_URL
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DB_USERNAME
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DB_PASSWORD
+        - name: APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: APP_SECRET
+        - name: FIREBASE_CREDENTIALS_JSON
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: FIREBASE_CREDENTIALS_JSON
+        - name: FIREBASE_PROJECT_ID
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: FIREBASE_PROJECT_ID
+        - name: FIREBASE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: FIREBASE_API_KEY
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "2"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+      imagePullSecrets:
+      - name: dockerhub-secret

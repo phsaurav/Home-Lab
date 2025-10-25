@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dwc-app-nodeport
+  namespace: dwc
+  labels:
+    app: dwc-app
+    service-type: external
+spec:
+  selector:
+    app: dwc-app
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30808
+    name: http
+  type: NodePort
