@@ -12,7 +12,6 @@ expose:
 externalURL: http://harbor.phsaurav.net:31529
 namespaceOverride: harbor
 
-
 chartmuseum:
   enabled: false
 
@@ -24,6 +23,71 @@ notary:
 
 trivy:
   enabled: false
+
+resources:
+  requests:
+    memory: "1Gi"
+    cpu: "500m"
+  limits:
+    memory: "2Gi"
+    cpu: "1000m"
+
+# Component-specific resources
+portal:
+  healthCheck:
+    periodSeconds: 60
+    timeoutSeconds: 30
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+core:
+  healthCheck:
+    periodSeconds: 60
+    timeoutSeconds: 30
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "500m"
+    limits:
+      memory: "2Gi"
+      cpu: "1000m"
+
+registry:
+  healthCheck:
+    periodSeconds: 60
+    timeoutSeconds: 30
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+
+database:
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "500m"
+    limits:
+      memory: "1Gi"
+      cpu: "1000m"
+
+redis:
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+
 
 persistence:
   enabled: true
@@ -49,3 +113,16 @@ persistence:
       storageClass: nfs-prod
       accessMode: ReadWriteOnce
       size: 1Gi
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - harbor
+          topologyKey: kubernetes.io/hostname
