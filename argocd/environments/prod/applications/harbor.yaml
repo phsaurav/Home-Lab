@@ -32,16 +32,8 @@ spec:
       - ServerSideApply=true
       - RespectIgnoreDifferences=true
   ignoreDifferences:
-    - group: apps
-      kind: StatefulSet
-      name: harbor-database
-      namespace: harbor
+    - group: ""
+      kind: PersistentVolumeClaim
       jsonPointers:
-        - /spec/volumeClaimTemplates/0/metadata/creationTimestamp
-    - group: apps
-      kind: StatefulSet
-      name: harbor-redis
-      namespace: harbor
-      jsonPointers:
-        - /spec/volumeClaimTemplates/0/metadata/creationTimestamp
+        - /metadata/creationTimestamp
   revisionHistoryLimit: 5
