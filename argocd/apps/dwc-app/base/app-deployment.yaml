@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: drivewithclive/dwc-backend:adcbc76471a50c84205e8c9d858856973ca3b0a9
+        image: drivewithclive/dwc-backend:f55ec043f9096a8eac4b8e56069b06f0649a6fa3
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
