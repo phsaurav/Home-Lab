@@ -8,4 +8,4 @@ data:
   DB_PORT: "3306"
   APP_ENV: "dev"
   DB_DATABASE: "dwcDB"
-  BASE_URL: "https://dwc.phsaurav.net"
+  BASE_URL: "https://dwc-dev.phsaurav.net"
