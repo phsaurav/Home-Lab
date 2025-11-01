@@ -18,7 +18,7 @@ module "talos-k8s-1" {
   vm_state = "running"
 
   master_memory = 8192
-  worker_memory = 4096
+  worker_memory = 8192
 
 }
 
@@ -40,7 +40,7 @@ module "tk_nas" {
 
   # Resources
   cores  = 1
-  memory = 4096
+  memory = 2048
 
   # Storage
   rootfs_storage = "local-lvm"
@@ -77,7 +77,7 @@ module "pi_hole" {
 
   # Resources
   cores  = 2
-  memory = 2048
+  memory = 1024
   swap = 0
 
   # Storage
@@ -113,8 +113,8 @@ module "vault_lxc" {
   pool = "LXC"
 
   # Resources
-  cores  = 2
-  memory = 2048
+  cores  = 1
+  memory = 1024
   swap   = 0
 
   # Storage
@@ -149,8 +149,8 @@ module "n8n" {
   unprivileged = true
   pool = "LXC"
 
-  cores  = 2
-  memory = 2048
+  cores  = 1
+  memory = 1024
   swap   = 0
 
   # Storage

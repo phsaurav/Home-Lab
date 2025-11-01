@@ -6,7 +6,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   annotations:
-    avp.kubernetes.io/path: "secret/data/prod/harbor"
+    avp.kubernetes.io/path: "secret/data/dev/harbor"
 spec:
   project: homelab
   sources:
@@ -16,7 +16,7 @@ spec:
       helm:
         releaseName: harbor
         valueFiles:
-          - $values/argocd/apps/harbor/prod/values.yaml
+          - $values/argocd/apps/harbor/dev/values.yaml
     - repoURL: https://github.com/phsaurav/Home-Lab.git
       targetRevision: main
       ref: values
