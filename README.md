@@ -209,18 +209,19 @@ HomeLab/
 - [x] Automated Kubernetes Prod Cluster Setup with Talos config
 - [x] LXC Container Service provisioning with Terraform
 - [x] Installing and managing applications using GitOps ArgoCD
-- [x] HashiCorp Vault setup for secret managemet
+- [x] HashiCorp Vault setup for secret management
 - [x] Pi-hole local DNS server and Turnkey file server setup
-- [x] NFS file system setup for kubernetes distributed storage
-- [x] Grafana and Prometheus setup for observibility
+- [x] NFS file system setup for Kubernetes distributed storage
+- [x] Grafana and Prometheus setup for observability
 - [x] Automated backup and restore with rsync
 - [x] Gitea and Harbor setup
 - [x] NGINX ingress setup
+- [ ] Add Homepage Centralized Dashboard
 - [ ] ELK Stack Setup in Dev cluster 
 - [ ] Automatic rolling upgrade for OS and Kubernetes
 - [ ] Automated certificate management for full environment
 - [ ] DNS failover to pilot-light AWS infra disaster management setup for Prod cluster
-- [ ] Ensuring 99.9% availablity for Prod cluster
+- [ ] Ensuring 99.9% availability for Prod cluster
 
 
 
