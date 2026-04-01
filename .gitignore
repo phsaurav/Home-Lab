@@ -38,3 +38,4 @@ ansible/secret.yaml.tmp
 # Vault
 vault/secrets.yaml
 argocd/argocd-values.yaml
+/CLAUDE.md

@@ -17,6 +17,8 @@ module "talos-k8s-1" {
 
   vm_state = "running"
 
+  qemu_agent = 0
+
   master_memory = 8192
   worker_memory = 8192
 
@@ -92,7 +94,7 @@ module "pi_hole" {
   features_enabled = true
   features = {
     nesting      = true
-    # keyctl       = true
+    keyctl       = true
   }
 
   startup = "order=5,up=10"
@@ -169,4 +171,34 @@ module "n8n" {
 
   # Tags
   tags = "lxc,prod"
+}
+
+module "homepage" {
+  source = "../../modules/lxc"
+  vmid         = 399
+  target_node  = "proxmox"
+  hostname     = "homepage"
+  ostemplate   = "local:vztmpl/debian-12-standard_12.12-1_amd64.tar.zst"
+  password     = var.lxc_pass
+  onboot       = true
+  unprivileged = true
+  pool         = "LXC"
+  # Resources - Increased for Docker
+  cores   = 2
+  memory  = 2048
+  swap    = 0
+  # Storage
+  rootfs_storage = "local-lvm"
+  rootfs_size    = "8G"
+  # Network
+  network_bridge = "vmbr0"
+  network_ip     = var.homepage_ip
+  network_gw     = var.gateway
+  features_enabled = true
+  features = {
+    nesting = true
+    keyctl = true
+  }
+  startup = "order=7,up=10"
+  tags = "lxc,dashboard,docker,prod"
 }

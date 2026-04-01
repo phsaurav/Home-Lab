@@ -74,3 +74,10 @@ variable "vault_ip" {
   type        = string
   default     = "dhcp"
 }
+
+# Homepage variables
+variable "homepage_ip" {
+  description = "Homepage Container IP"
+  type        = string
+  default     = "dhcp"
+}
