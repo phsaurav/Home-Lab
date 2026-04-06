@@ -216,6 +216,7 @@ HomeLab/
 - [x] Automated backup and restore with rsync
 - [x] Gitea and Harbor setup
 - [x] NGINX ingress setup
+- [ ] A centralized dashboard setup with HomePage
 - [ ] ELK Stack Setup in Dev cluster 
 - [ ] Automatic rolling upgrade for OS and Kubernetes
 - [ ] Automated certificate management for full environment
