@@ -217,9 +217,9 @@ HomeLab/
 - [x] Gitea and Harbor setup
 - [x] NGINX ingress setup
 - [ ] A centralized dashboard setup with HomePage
+- [ ] Automated certificate management for full environment
 - [ ] ELK Stack Setup in Dev cluster 
 - [ ] Automatic rolling upgrade for OS and Kubernetes
-- [ ] Automated certificate management for full environment
 - [ ] DNS failover to pilot-light AWS infra disaster management setup for Prod cluster
 - [ ] Ensuring 99.9% availablity for Prod cluster
 
