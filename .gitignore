@@ -39,3 +39,7 @@ ansible/secret.yaml.tmp
 vault/secrets.yaml
 argocd/argocd-values.yaml
 /CLAUDE.md
+
+# Traefik - sensitive files with backend IPs and tokens
+traefik/.env
+traefik/config/services.yaml

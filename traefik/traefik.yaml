@@ -1,0 +1,40 @@
+api:
+  dashboard: true
+  insecure: false
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: ":443"
+    http:
+      tls:
+        certResolver: letsencrypt
+        domains:
+          - main: "phsaurav.net"
+            sans:
+              - "*.phsaurav.net"
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: phsaurav@gmail.com
+      storage: /letsencrypt/acme.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
+
+providers:
+  file:
+    directory: /etc/traefik/config
+    watch: true
+
+serversTransport:
+  insecureSkipVerify: true

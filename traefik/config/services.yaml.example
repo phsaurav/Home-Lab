@@ -1,0 +1,159 @@
+http:
+  routers:
+    # --- LXC Services ---
+    proxmox:
+      rule: "Host(`proxmox.phsaurav.net`)"
+      service: proxmox
+      entryPoints:
+        - websecure
+    pihole:
+      rule: "Host(`pihole.phsaurav.net`)"
+      service: pihole
+      entryPoints:
+        - websecure
+    vault:
+      rule: "Host(`vault.phsaurav.net`)"
+      service: vault
+      entryPoints:
+        - websecure
+    n8n:
+      rule: "Host(`n8n.phsaurav.net`)"
+      service: n8n
+      entryPoints:
+        - websecure
+    dashboard:
+      rule: "Host(`dashboard.phsaurav.net`)"
+      service: dashboard
+      entryPoints:
+        - websecure
+    nas:
+      rule: "Host(`nas.phsaurav.net`)"
+      service: nas
+      entryPoints:
+        - websecure
+
+    # --- Prod K8s ---
+    argocd:
+      rule: "Host(`argocd.phsaurav.net`)"
+      service: argocd
+      entryPoints:
+        - websecure
+    grafana:
+      rule: "Host(`grafana.phsaurav.net`)"
+      service: grafana
+      entryPoints:
+        - websecure
+    prometheus:
+      rule: "Host(`prometheus.phsaurav.net`)"
+      service: prometheus
+      entryPoints:
+        - websecure
+    dwc:
+      rule: "Host(`dwc.phsaurav.net`)"
+      service: dwc
+      entryPoints:
+        - websecure
+
+    # --- Dev K8s ---
+    argocd-dev:
+      rule: "Host(`argocd-dev.phsaurav.net`)"
+      service: argocd-dev
+      entryPoints:
+        - websecure
+    grafana-dev:
+      rule: "Host(`grafana-dev.phsaurav.net`)"
+      service: grafana-dev
+      entryPoints:
+        - websecure
+    prometheus-dev:
+      rule: "Host(`prometheus-dev.phsaurav.net`)"
+      service: prometheus-dev
+      entryPoints:
+        - websecure
+    gitea:
+      rule: "Host(`gitea.phsaurav.net`)"
+      service: gitea
+      entryPoints:
+        - websecure
+    harbor:
+      rule: "Host(`harbor.phsaurav.net`)"
+      service: harbor
+      entryPoints:
+        - websecure
+
+    # --- Traefik Dashboard ---
+    traefik-dashboard:
+      rule: "Host(`traefik.phsaurav.net`)"
+      service: api@internal
+      entryPoints:
+        - websecure
+
+  services:
+    # --- LXC Services ---
+    # Replace <PROXMOX_IP>, <PIHOLE_IP>, etc. with actual backend IPs
+    proxmox:
+      loadBalancer:
+        servers:
+          - url: "https://<PROXMOX_IP>:8006"
+    pihole:
+      loadBalancer:
+        servers:
+          - url: "http://<PIHOLE_IP>:80"
+    vault:
+      loadBalancer:
+        servers:
+          - url: "http://<VAULT_IP>:8200"
+    n8n:
+      loadBalancer:
+        servers:
+          - url: "http://<N8N_IP>:5678"
+    dashboard:
+      loadBalancer:
+        servers:
+          - url: "http://<HOMEPAGE_IP>:3000"
+    nas:
+      loadBalancer:
+        servers:
+          - url: "https://<NAS_IP>:12321"
+
+    # --- Prod K8s ---
+    # Replace <PROD_K8S_NODE_IP> with a control plane or worker node IP
+    argocd:
+      loadBalancer:
+        servers:
+          - url: "https://<PROD_K8S_NODE_IP>:32443"
+    grafana:
+      loadBalancer:
+        servers:
+          - url: "http://<PROD_K8S_NODE_IP>:32300"
+    prometheus:
+      loadBalancer:
+        servers:
+          - url: "http://<PROD_K8S_NODE_IP>:32090"
+    dwc:
+      loadBalancer:
+        servers:
+          - url: "http://<PROD_K8S_NODE_IP>:30808"
+
+    # --- Dev K8s ---
+    # Replace <DEV_K8S_NODE_IP> with a control plane or worker node IP
+    argocd-dev:
+      loadBalancer:
+        servers:
+          - url: "https://<DEV_K8S_NODE_IP>:32443"
+    grafana-dev:
+      loadBalancer:
+        servers:
+          - url: "http://<DEV_K8S_NODE_IP>:32300"
+    prometheus-dev:
+      loadBalancer:
+        servers:
+          - url: "http://<DEV_K8S_NODE_IP>:32090"
+    gitea:
+      loadBalancer:
+        servers:
+          - url: "http://<DEV_K8S_NODE_IP>:32000"
+    harbor:
+      loadBalancer:
+        servers:
+          - url: "http://<DEV_K8S_NODE_IP>:31529"

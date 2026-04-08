@@ -75,6 +75,13 @@ variable "vault_ip" {
   default     = "dhcp"
 }
 
+# Traefik variables
+variable "traefik_ip" {
+  description = "Traefik Reverse Proxy Container IP"
+  type        = string
+  default     = "dhcp"
+}
+
 # Homepage variables
 variable "homepage_ip" {
   description = "Homepage Container IP"

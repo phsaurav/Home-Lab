@@ -78,6 +78,11 @@ The whole architecture enforces a security-first posture by managing all credent
         <td>Kubernetes cluster log aggregation tool.</td>
     </tr>
     <tr>
+        <td><img width="32" src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/homepage.png"></td>
+        <td><a href="https://gethomepage.dev/">homepage</a></td>
+        <td>A modern, fully static, fast, secure fully proxied, highly customizable application dashboard for a centralized dashboard setup for whole HomeLab infra.</td>
+    </tr>
+    <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vault/vault-original.svg"></td>
         <td><a href="https://developer.hashicorp.com/vault">Hashicorp Vault</a></td>
         <td>Secret management system for the Homelab. Integrated with ArgoCD via ArgoCD Vault Plugin.</td>
@@ -96,6 +101,11 @@ The whole architecture enforces a security-first posture by managing all credent
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg"></td>
         <td><a href="https://developers.cloudflare.com/">Cloudflare</a></td>
         <td>DNS Provider and Tunnel.</td>
+    </tr>
+    <tr>
+        <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/traefikproxy/traefikproxy-original.svg"></td>
+        <td><a href="https://traefik.io/traefik">traefik</a></td>
+        <td>Infra wide reverse proxy and dynamic certificate resulation solution.</td>
     </tr>
     <tr>
         <td><img width="32" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/harbor/harbor-original.svg"></td>
@@ -216,8 +226,8 @@ HomeLab/
 - [x] Automated backup and restore with rsync
 - [x] Gitea and Harbor setup
 - [x] NGINX ingress setup
-- [ ] A centralized dashboard setup with HomePage
-- [ ] Automated certificate management for full environment
+- [x] A centralized dashboard setup with HomePage
+- [x] Automated certificate management for full environment
 - [ ] ELK Stack Setup in Dev cluster 
 - [ ] Automatic rolling upgrade for OS and Kubernetes
 - [ ] DNS failover to pilot-light AWS infra disaster management setup for Prod cluster

@@ -173,6 +173,43 @@ module "n8n" {
   tags = "lxc,prod"
 }
 
+module "traefik" {
+  source = "../../modules/lxc"
+
+  vmid         = 388
+  target_node  = "proxmox"
+  hostname     = "traefik"
+  ostemplate   = "local:vztmpl/debian-12-standard_12.12-1_amd64.tar.zst"
+  password     = var.lxc_pass
+  onboot       = true
+  unprivileged = true
+  pool         = "LXC"
+
+  # Resources
+  cores  = 1
+  memory = 512
+  swap   = 0
+
+  # Storage
+  rootfs_storage = "local-lvm"
+  rootfs_size    = "8G"
+
+  # Network
+  network_bridge = "vmbr0"
+  network_ip     = var.traefik_ip
+  network_gw     = var.gateway
+
+  features_enabled = true
+  features = {
+    nesting = true
+    keyctl  = true
+  }
+
+  startup = "order=4,up=10"
+
+  tags = "lxc,traefik,proxy,prod"
+}
+
 module "homepage" {
   source = "../../modules/lxc"
   vmid         = 399

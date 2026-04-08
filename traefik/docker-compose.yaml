@@ -1,0 +1,17 @@
+services:
+  traefik:
+    image: traefik:v3.4
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
+    volumes:
+      - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - ./config:/etc/traefik/config:ro
+      - traefik-certs:/letsencrypt
+
+volumes:
+  traefik-certs:
