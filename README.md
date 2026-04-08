@@ -189,11 +189,15 @@ HomeLab/
 ```
 
 ## Gallery
-|                                                          Proxmox Dashboard                                                           |
+|                                                          homepage Dashboard                                                          |
 |:------------------------------------------------------------------------------------------------------------------------------------:|
+|      ![Screenshot 2026-04-08 at 9 56 22 PM](https://github.com/user-attachments/assets/1d37d0a0-b2ab-463b-b2c8-dad94df52c8c)         |
+|                                                          Proxmox Dashboard                                                           |
 |     ![Screenshot 2025-10-19 at 1 29 23 AM-min](https://github.com/user-attachments/assets/757eef7c-5aca-48e0-bd67-6fe207852e6d)      |
 |                                                 Grafana Cluster Monitoring Dashboard                                                 |
 |     ![Screenshot 2025-10-19 at 1 04 55 AM-min](https://github.com/user-attachments/assets/9442c134-c405-46f4-8601-3b266d26a009)      |
+|                                                            traefik proxy                                                             |
+|      ![Screenshot 2026-04-08 at 9 56 57 PM](https://github.com/user-attachments/assets/cdc4b5df-23f9-4287-8589-fa90936e6934)         |
 |                                                            GitOps: ArgoCD                                                            |
 |     ![Screenshot 2025-10-19 at 1 12 15 AM-min](https://github.com/user-attachments/assets/4e4b8732-cffd-4dff-bbf5-1eccbf849ad8)      |
 |                                                  Secret Management: Hashicorp Vault                                                  |
