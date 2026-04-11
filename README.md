@@ -8,7 +8,7 @@ Alongside it has a `Production` environment consisting of lightweight `LXC` cont
 
 The whole architecture enforces a security-first posture by managing all credentials through HashiCorp `Vault`, Ansible Vault, and `SOPS` encryption as necessary.
 
-<img width="5747" height="3763" alt="HomeLab_Arch" src="https://github.com/user-attachments/assets/3573dc79-e3cd-4912-b267-feeca986b837" />
+<img width="5911" height="3763" alt="image" src="https://github.com/user-attachments/assets/5782f524-fe51-4d25-8f1c-c86574ffedd1" />
 
 ## Tech Stack
 <table>
