@@ -1,37 +1,37 @@
-output "tk_nas_details"{
-   value = {
-     id = module.tk_nas.container_id
-     name = module.tk_nas.container_name
-     ip = module.tk_nas.container_ip
-   }
- }
+output "tk_nas_details" {
+  value = {
+    id   = module.tk_nas.container_id
+    name = module.tk_nas.container_name
+    ip   = module.tk_nas.container_ip
+  }
+}
 
-output "pi_hole_details"{
-   value = {
-     id = module.pi_hole.container_id
-     name = module.pi_hole.container_name
-     ip = module.pi_hole.container_ip
-   }
- }
+output "pi_hole_details" {
+  value = {
+    id   = module.pi_hole.container_id
+    name = module.pi_hole.container_name
+    ip   = module.pi_hole.container_ip
+  }
+}
 
 
-output "vault_details"{
-   value = {
-     id = module.vault_lxc.container_id
-     name = module.vault_lxc.container_name
-     ip = module.vault_lxc.container_ip
-   }
- }
+output "vault_details" {
+  value = {
+    id   = module.vault_lxc.container_id
+    name = module.vault_lxc.container_name
+    ip   = module.vault_lxc.container_ip
+  }
+}
 
 # Talos K8s Cluster Output
 output "master_nodes" {
   description = "Details for all Talos control-plane nodes."
-  value = module.talos-k8s-1.master_nodes
+  value       = module.talos-k8s-1.master_nodes
 }
 
 output "worker_nodes" {
   description = "Details for all Talos worker nodes."
-  value = module.talos-k8s-1.worker_nodes
+  value       = module.talos-k8s-1.worker_nodes
 }
 
 output "all_node_vmids" {

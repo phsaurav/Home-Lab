@@ -1,6 +1,6 @@
 variable "project" {
   description = "Proxmox Project Name"
-  type = string
+  type        = string
 }
 
 variable "environment" {
@@ -23,17 +23,17 @@ variable "talos_k8s_cidr" {
 # ProxMox Variable
 variable "pm_api_url" {
   description = "Proxmox API URL"
-  type = string
+  type        = string
 }
 
 variable "pm_api_token_id" {
   description = "Proxmox API Token ID"
-  type = string
+  type        = string
 }
 
 variable "pm_api_token_secret" {
   description = "Proxmox API Token Secret"
-  type  = string
+  type        = string
 }
 
 # Turnkey NAS Variable
@@ -57,13 +57,6 @@ variable "tk_nas_ip" {
 # Pi-Hole variables
 variable "pi_hole_ip" {
   description = "PI Hole Container IP"
-  type        = string
-  default     = "dhcp"
-}
-
-# n8n variables
-variable "n8n_ip" {
-  description = "n8n Container IP"
   type        = string
   default     = "dhcp"
 }

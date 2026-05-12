@@ -5,6 +5,12 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
   pool        = var.pool
   vm_state    = var.vm_state
 
+  lifecycle {
+    ignore_changes = [
+      vm_state,
+    ]
+  }
+
   # Clone settings
   clone      = var.clone_template
   full_clone = var.full_clone

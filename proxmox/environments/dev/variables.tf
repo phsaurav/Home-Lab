@@ -1,6 +1,6 @@
 variable "project" {
   description = "Proxmox Project Name"
-  type = string
+  type        = string
 }
 
 variable "environment" {
@@ -16,17 +16,17 @@ variable "environment" {
 # ProxMox Variable
 variable "pm_api_url" {
   description = "Proxmox API URL"
-  type = string
+  type        = string
 }
 
 variable "pm_api_token_id" {
   description = "Proxmox API Token ID"
-  type = string
+  type        = string
 }
 
 variable "pm_api_token_secret" {
   description = "Proxmox API Token Secret"
-  type  = string
+  type        = string
 }
 
 # Ubuntu VM variables
@@ -49,8 +49,8 @@ variable "ssh_private_key_path" {
 
 variable "ssh_public_key" {
   description = "SSH public key for adding it to autorized key"
-  type  = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 # ubuntu VM variables
@@ -83,5 +83,24 @@ variable "gateway" {
 
 variable "ub_k8s_cidr" {
   description = "ubuntu VM IP configuration (ipconfig0)"
+  type        = string
+}
+
+# LXC Container Variables (for n8n)
+variable "lxc_pass" {
+  description = "LXC Container Password"
+  type        = string
+  sensitive   = true
+}
+
+variable "n8n_ip" {
+  description = "n8n Container IP"
+  type        = string
+  default     = "dhcp"
+}
+
+# OpenClaw VM Variables
+variable "openclaw_ip" {
+  description = "OpenClaw VM IP with CIDR (e.g. '192.168.10.69/24')"
   type        = string
 }
