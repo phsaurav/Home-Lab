@@ -9,3 +9,4 @@ resources:
 patchesStrategicMerge:
   - grafana-pvc-prod.yaml
   - prometheus-pvc-prod.yaml
+  - grafana-rooturl-prod.yaml

@@ -17,13 +17,21 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: grafana/grafana:main
+          image: grafana/grafana:11.4.0
           ports:
             - containerPort: 3000
               name: http
           env:
             - name: GF_SECURITY_ADMIN_USER
               value: "admin"
+            - name: GF_LIVE_ENABLED
+              value: "false"
+            - name: GF_ANALYTICS_CHECK_FOR_UPDATES
+              value: "false"
+            - name: GF_ANALYTICS_REPORTING_ENABLED
+              value: "false"
+            - name: GF_NEWS_NEWS_FEED_ENABLED
+              value: "false"
           volumeMounts:
             - name: grafana-datasources
               mountPath: /etc/grafana/provisioning/datasources
