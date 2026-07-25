@@ -4,7 +4,7 @@ machine:
     interfaces:
       - interface: ens18 
         addresses:
-          - ${TALOS_CP1_IP}/24
+          - ${TALOS_CP1_IP}/20
         routes:
           - network: 0.0.0.0/0
             gateway: ${GATEWAY}
