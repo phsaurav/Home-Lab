@@ -1,0 +1,16 @@
+# Point Grafana at the local-path claim and pin it to the node that holds it.
+# local-path volumes are node-bound, so the pod must not be free to reschedule.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: talos-k8s-wn2
+      volumes:
+        - name: grafana-storage
+          persistentVolumeClaim:
+            claimName: grafana-storage-local

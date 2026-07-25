@@ -5,8 +5,8 @@ namespace: monitoring
 
 resources:
   - ../base
-  # Local-disk claims. Bound by the migration Job (first consumer), before the
-  # Deployments are repointed at them in a later change.
+  # Local-disk claims. The old nfs-prod claims are intentionally left declared
+  # (see *-pvc-prod.yaml) so the NFS data stays bound and available for rollback.
   - grafana-pvc-local.yaml
   - prometheus-pvc-local.yaml
 
@@ -14,3 +14,5 @@ patchesStrategicMerge:
   - grafana-pvc-prod.yaml
   - prometheus-pvc-prod.yaml
   - grafana-rooturl-prod.yaml
+  - grafana-deploy-prod.yaml
+  - prometheus-deploy-prod.yaml

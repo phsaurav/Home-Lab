@@ -1,0 +1,25 @@
+# Point Prometheus at the local-path claim and pin it to that node.
+# args is a plain list with no merge key, so the full set is restated here;
+# retention.size is added as a hard ceiling so the TSDB can never fill the
+# node's EPHEMERAL partition.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: monitoring
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: talos-k8s-wn2
+      containers:
+        - name: prometheus
+          args:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+            - '--storage.tsdb.path=/prometheus'
+            - '--storage.tsdb.retention.time=7d'
+            - '--storage.tsdb.retention.size=4GB'
+      volumes:
+        - name: prometheus-storage
+          persistentVolumeClaim:
+            claimName: prometheus-storage-local
