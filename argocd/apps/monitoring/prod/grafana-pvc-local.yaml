@@ -1,0 +1,19 @@
+# Local-disk claim for Grafana state.
+#
+# Grafana runs on SQLite, which relies on POSIX advisory locks and per-txn
+# fsync. On the nfs-prod class those locks became network round-trips to the
+# NAS (mount opts: hard,timeo=600,local_lock=none), producing "database is
+# locked" and 20-30s page renders. The DB itself is only ~1.5MB; the problem
+# was lock latency, not size. 2Gi leaves ample room for plugins and renders.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-storage-local
+  namespace: monitoring
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: local-path

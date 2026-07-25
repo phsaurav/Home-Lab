@@ -1,0 +1,17 @@
+# Local-disk claim for the Prometheus TSDB.
+#
+# Prometheus does not support its TSDB on NFS; it stalled hard enough that the
+# pod could not serve its own /api/v1/query. Actual on-disk size is ~220MB at
+# 7d retention, so the previous 20Gi request was ~90x over-provisioned.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-storage-local
+  namespace: monitoring
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: local-path

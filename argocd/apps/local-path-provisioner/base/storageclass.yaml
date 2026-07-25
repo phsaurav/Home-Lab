@@ -1,0 +1,13 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-path
+provisioner: rancher.io/local-path
+# Retain, not the upstream default of Delete: this class backs Grafana's SQLite
+# DB and Prometheus' TSDB, so an accidental PVC deletion must not wipe the data.
+# A released PV leaves its directory on the node for manual recovery.
+reclaimPolicy: Retain
+# Required for local volumes: the PV must be created on the node the consuming
+# pod actually lands on, so binding has to wait for the scheduler.
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: false

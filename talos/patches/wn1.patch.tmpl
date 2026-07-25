@@ -8,3 +8,20 @@ machine:
         routes:
           - network: 0.0.0.0/0
             gateway: ${GATEWAY}
+  # Exposes the local-path-provisioner data directory to the kubelet.
+  # Talos runs the kubelet as a container in its own mount namespace, so a host
+  # path it does not know about cannot be bind-mounted into pods. Without this
+  # the volume silently lands inside the kubelet container and the data is lost
+  # on kubelet restart. rshared is required because the provisioner creates
+  # subdirectories after the kubelet has already started.
+  # /var is used because it is the only writable, reboot-persistent path on Talos.
+  kubelet:
+    extraMounts:
+      - destination: /var/mnt/local-path-provisioner
+        type: bind
+        source: /var/mnt/local-path-provisioner
+        options:
+          - bind
+          - rshared
+          - rw
+

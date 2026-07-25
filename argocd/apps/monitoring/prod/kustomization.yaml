@@ -5,6 +5,10 @@ namespace: monitoring
 
 resources:
   - ../base
+  # Local-disk claims. Bound by the migration Job (first consumer), before the
+  # Deployments are repointed at them in a later change.
+  - grafana-pvc-local.yaml
+  - prometheus-pvc-local.yaml
 
 patchesStrategicMerge:
   - grafana-pvc-prod.yaml
