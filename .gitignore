@@ -43,3 +43,4 @@ argocd/argocd-values.yaml
 # Traefik - sensitive files with backend IPs and tokens
 traefik/.env
 traefik/config/services.yaml
+/docs/incidents
