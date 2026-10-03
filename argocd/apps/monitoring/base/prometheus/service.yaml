@@ -5,6 +5,8 @@ metadata:
   namespace: monitoring
   labels:
     app: prometheus
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/component: server
 spec:
   type: NodePort
   ports:
